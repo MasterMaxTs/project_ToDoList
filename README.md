@@ -1,4 +1,4 @@
-
+[![Build Status](https://app.travis-ci.com/MasterMaxTs/project_ToDoList.svg?branch=master)](https://app.travis-ci.com/MasterMaxTs/project_ToDoList)
 
 Это учебный проект по разработке  приложения "Список дел".
 
