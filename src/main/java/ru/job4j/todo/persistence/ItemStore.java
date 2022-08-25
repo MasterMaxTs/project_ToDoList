@@ -63,9 +63,11 @@ public class ItemStore implements Store<Item> {
         session.beginTransaction();
         boolean rsl = session.createQuery(
                         "update Item set name = :fName, description = :fDesc,"
-                                + " done = :fDone where id = :fId"
+                                + " created = :fCreated ,done = :fDone where "
+                                + "id = :fId"
                 ).setParameter("fName", item.getName())
                 .setParameter("fDesc", item.getDescription())
+                .setParameter("fCreated", item.getCreated())
                 .setParameter("fDone", item.isDone())
                 .setParameter("fId", id)
                 .executeUpdate() > 0;

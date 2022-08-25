@@ -20,11 +20,16 @@ public class ItemController {
 
     @GetMapping("/index")
     public String index(Model model) {
+        return "redirect:/items";
+    }
+
+    @GetMapping("/items")
+    public String getItems(Model model) {
         model.addAttribute("items", service.findAll());
         return "item/index";
     }
 
-    @GetMapping("/formGetDescription/{id}")
+    @GetMapping("/items/{id}")
     public String getDescription(Model model, @PathVariable("id") int id) {
         model.addAttribute("item", service.findById(id));
         return "item/item";
@@ -51,18 +56,18 @@ public class ItemController {
         return "item/update_item";
     }
 
-    @GetMapping("/formAddItem")
+    @GetMapping("/items/new")
     public String createItem() {
         return "item/add_item";
     }
 
-    @GetMapping("/completedItems")
+    @GetMapping("/completed_items")
     public String getCompletedItems(Model model) {
         model.addAttribute("completed", service.findCompleted());
         return "item/completed_items";
     }
 
-    @GetMapping("/newItems")
+    @GetMapping("/new_items")
     public String getNewItems(Model model) {
         model.addAttribute("newItems", service.findNew());
         return "item/new_items";
