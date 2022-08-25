@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS items (
     id SERIAL PRIMARY KEY,
-    name TEXT,
+    name VARCHAR(100),
+    description TEXT,
     created TIMESTAMP,
     done BOOLEAN
 );
