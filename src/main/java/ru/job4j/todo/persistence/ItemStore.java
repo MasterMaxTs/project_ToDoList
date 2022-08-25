@@ -3,7 +3,6 @@ package ru.job4j.todo.persistence;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
-import ru.job4j.todo.Store;
 import ru.job4j.todo.entity.Item;
 
 import java.util.List;
