@@ -1,14 +1,11 @@
 package ru.job4j.todo.entity;
 
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "items")
@@ -16,9 +13,6 @@ import java.time.format.DateTimeFormatter;
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Item {
-
-//    public static final DateTimeFormatter FORMATTER =
-//            DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,10 +29,4 @@ public class Item {
         this.description = description;
         this.done = done;
     }
-
-//    @Override
-//    public String toString() {
-//        return String.format("Item [name = %s, created = %s, done = %b]",
-//                name, FORMATTER.format(created), done);
-//    }
 }
