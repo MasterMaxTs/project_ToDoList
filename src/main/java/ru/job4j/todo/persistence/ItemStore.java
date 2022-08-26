@@ -57,7 +57,7 @@ public class ItemStore implements Store<Item> {
     }
 
     @Override
-    public boolean update(int id, Item item) {
+    public boolean update(Item item) {
         Session session = sf.openSession();
         session.beginTransaction();
         boolean rsl = session.createQuery(
@@ -68,7 +68,7 @@ public class ItemStore implements Store<Item> {
                 .setParameter("fDesc", item.getDescription())
                 .setParameter("fCreated", item.getCreated())
                 .setParameter("fDone", item.isDone())
-                .setParameter("fId", id)
+                .setParameter("fId", item.getId())
                 .executeUpdate() > 0;
         session.getTransaction().commit();
         session.close();

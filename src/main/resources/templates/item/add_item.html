@@ -40,10 +40,12 @@
         <form th:action="@{/addItem}" method="POST">
             <div class="form-group">
                 <input type="hidden" name="done" value="false"/>
-                <label for="name">Название задания</label><br>
-                <input type="text" name="name" id="name" size="40" required="required"/><br>
+                <label for="name">Задание</label><br>
+                <input type="text" name="name" id="name" size="40"
+                       placeholder="Введите название" required="required"/><br><br>
                 <label for="desc">Описание задания</label><br>
-                <textarea name="description" id="desc" style="height: 250px; width: 600px" required="required"></textarea>
+                <textarea name="description" id="desc" style="height: 250px; width: 600px"
+                          placeholder="Введите описание" required="required"></textarea>
                 <p><button type="submit" class="btn btn-info" style="float: left">Создать</button></p>
             </div>
         </form>

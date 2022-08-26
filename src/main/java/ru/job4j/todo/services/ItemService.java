@@ -31,8 +31,8 @@ public class ItemService {
         return store.findNew();
     }
 
-    public boolean update(int id, Item item) {
-        return store.update(id, item);
+    public boolean update(Item item) {
+        return store.update(item);
     }
 
     public boolean delete(int id) {

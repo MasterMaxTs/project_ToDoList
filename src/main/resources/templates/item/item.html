@@ -31,13 +31,14 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-item nav-link" th:href="@{/items}">Все</a>
-                <a class="nav-item nav-link" th:href="@{/completedItems}">Выполненные</a>
-                <a class="nav-item nav-link" th:href="@{/newItems}">Новые</a>
+                <a class="nav-item nav-link" th:href="@{/completed_items}">Выполненные</a>
+                <a class="nav-item nav-link" th:href="@{/new_items}">Новые</a>
             </div>
         </div>
     </nav><br><br>
     <div class="form-group">
-        <h5>Задание</h5>
+        <h5 th:if="${item.done}==true"><span style="color: darkgreen">Сделано:</span></h5>
+        <h5 th:if="${item.done}!=true"><span style="color: crimson">Выполнить:</span></h5>
         <table class="table table-bordered" >
             <tbody>
             <td th:text="${item.description}"></td>
@@ -46,7 +47,7 @@
     </div>
         <div th:if="${item.done == false}">
             <form th:action="@{/formSetDoneItem}" method="GET">
-                <input type="hidden" name="id" th:value="${item.id}">
+                <input type="hidden" name="id" th:value="${item.id}"/>
                 <button type="submit" class="btn btn-success" style="float: right">Выполнено</button>&nbsp&nbsp
             </form>
             <form th:action="@{/formGetUpdateItem}" method="GET">

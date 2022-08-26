@@ -19,7 +19,7 @@ public class ItemController {
     }
 
     @GetMapping("/index")
-    public String index(Model model) {
+    public String index() {
         return "redirect:/items";
     }
 
@@ -39,7 +39,7 @@ public class ItemController {
     public String setDone(@RequestParam("id") int id) {
         Item item = service.findById(id);
         item.setDone(true);
-        service.update(id, item);
+        service.update(item);
         return "redirect:/index";
     }
 
@@ -81,9 +81,9 @@ public class ItemController {
     }
 
     @PostMapping("updateItem")
-    public String update(@RequestParam int id, @ModelAttribute Item item) {
+    public String update(@ModelAttribute Item item) {
         item.setCreated(Timestamp.valueOf(LocalDateTime.now()));
-        service.update(id, item);
+        service.update(item);
         return "redirect:/index";
     }
 }
