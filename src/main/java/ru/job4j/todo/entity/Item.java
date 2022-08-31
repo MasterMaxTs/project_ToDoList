@@ -16,13 +16,24 @@ public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     @EqualsAndHashCode.Include
     private int id;
 
+    @Column(name = "name")
     private String name;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "created")
     private Timestamp created;
+
+    @Column(name = "done")
     private boolean done;
+
+    @Column(name = "user_id")
+    private int userId;
 
     public Item(String name, String description, boolean done) {
         this.name = name;

@@ -1,108 +1,18 @@
 package ru.job4j.todo.persistence;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.stereotype.Repository;
 import ru.job4j.todo.entity.Item;
 
 import java.util.List;
 
-@Repository
-public class ItemStore implements Store<Item> {
+public interface ItemStore extends AutoCloseable {
 
-    private final SessionFactory sf;
+    Item create(Item item);
 
-    public ItemStore(SessionFactory sf) {
-        this.sf = sf;
-    }
+    List<Item> findAll(int userId);
 
-    @Override
-    public Item create(Item item) {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        session.save(item);
-        session.getTransaction().commit();
-        session.close();
-        return item;
-    }
+    boolean update(Item item);
 
-    @Override
-    public List<Item> findAll() {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        List<Item> rsl = session.createQuery(
-                "from Item", Item.class
-        ).list();
-        session.getTransaction().commit();
-        session.close();
-        return rsl;
-    }
+    boolean delete(int id, int userId);
 
-    public List<Item> findCompleted() {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        List<Item> rsl = session.createQuery(
-                "from Item where done = true", Item.class
-        ).list();
-        session.getTransaction();
-        session.close();
-        return rsl;
-    }
-
-    public List<Item> findNew() {
-        List<Item> all = findAll();
-        List<Item> allCompleted = findCompleted();
-        all.removeAll(allCompleted);
-        return all;
-    }
-
-    @Override
-    public boolean update(Item item) {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        boolean rsl = session.createQuery(
-                        "update Item set name = :fName, description = :fDesc,"
-                                + " created = :fCreated ,done = :fDone where "
-                                + "id = :fId"
-                ).setParameter("fName", item.getName())
-                .setParameter("fDesc", item.getDescription())
-                .setParameter("fCreated", item.getCreated())
-                .setParameter("fDone", item.isDone())
-                .setParameter("fId", item.getId())
-                .executeUpdate() > 0;
-        session.getTransaction().commit();
-        session.close();
-        return rsl;
-    }
-
-    @Override
-    public boolean delete(int id) {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        boolean rsl = session.createQuery(
-                        "delete from Item where id = :fId"
-                ).setParameter("fId", id)
-                .executeUpdate() > 0;
-        session.getTransaction().commit();
-        session.close();
-        return rsl;
-    }
-
-    @Override
-    public Item findById(int id) {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        Item rsl = session.createQuery(
-                        "from Item where id = :fId", Item.class
-                ).setParameter("fId", id)
-                .uniqueResult();
-        session.getTransaction().commit();
-        session.close();
-        return rsl;
-    }
-
-    @Override
-    public void close() {
-        sf.close();
-    }
+    Item findById(int id, int userId);
 }

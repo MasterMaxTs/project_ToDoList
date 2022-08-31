@@ -3,5 +3,6 @@ CREATE TABLE IF NOT EXISTS items (
     name VARCHAR(100),
     description TEXT,
     created TIMESTAMP,
-    done BOOLEAN
+    done BOOLEAN,
+    user_id INT REFERENCES users(id)
 );

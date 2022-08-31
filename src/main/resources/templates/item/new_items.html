@@ -33,6 +33,19 @@
                 <a class="nav-item nav-link" th:href="@{/items}">Все</a>
                 <a class="nav-item nav-link" th:href="@{/completed_items}">Выполненные</a>
                 <a class="nav-item nav-link active" th:href="@{/new_items}"><b>Новые</b> </a>
+                <a class="nav-item nav-link" th:href="@{/formAddUser}">Регистрация</a>
+                <a class="nav-item nav-link" th:if="${user.name == 'Гость'}">
+                    <form th:action="@{/loginPage}" method="GET">
+                        <button type="submit" class="btn btn-info"><span th:text="${user.name}"></span> | Войти</button>
+                    </form>
+                </a>
+                <a class="nav-item nav-link" th:if="${user.name != 'Гость'}" th:href="@{/formUpdateUser}">Редактировать</a>&nbsp&nbsp
+                <a class="nav-item nav-link" th:if="${user.name != 'Гость'}">
+                    <form th:action="@{/logout}" method="GET">
+                        <button type="submit" class="btn btn-success">
+                            <span th:text="${user.name}"></span> | Выйти</button>
+                    </form>
+                </a>
             </div>
         </div>
     </nav>
