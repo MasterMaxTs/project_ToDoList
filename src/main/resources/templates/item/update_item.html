@@ -36,10 +36,11 @@
                 <a class="nav-item nav-link" th:href="@{/formAddUser}">Регистрация</a>
                 <a class="nav-item nav-link" th:if="${user.name == 'Гость'}">
                     <form th:action="@{/loginPage}" method="GET">
-                        <button type="submit" class="btn btn-info"><span th:text="${user.name}"></span> | Войти</button>
+                        <button type="submit" class="btn btn-info">
+                            <span th:text="${user.name}"></span> | Войти</button>
                     </form>
                 </a>
-                <a class="nav-item nav-link" th:if="${user.name != 'Гость'}" th:href="@{/formUpdateUser}">Редактировать</a>&nbsp&nbsp
+                <a class="nav-item nav-link" th:if="${user.name != 'Гость'}" th:href="@{/formUpdateUser}">Редактировать</a> &nbsp&nbsp
                 <a class="nav-item nav-link" th:if="${user.name != 'Гость'}">
                     <form th:action="@{/logout}" method="GET">
                         <button type="submit" class="btn btn-success">
@@ -54,10 +55,10 @@
             <input type="hidden" name="id" th:value="${item.id}"/>
             <div class="form-group">
                 <label for="name">Название задания</label><br>
-                <input type="text" name="name" id="name" th:value="${item.name}"/><br><br>
+                <input type="text" name="name" th:value="${item.name}" id="name"/><br><br>
                 <label for="desc">Описание задания</label><br>
-                <textarea name="description" id="desc" style="height: 250px; width: 600px"
-                          th:text="${item.description}"></textarea><br>
+                <textarea name="description" th:text="${item.description}"
+                          id="desc" cols="60" rows="12"></textarea><br><br>
                 <button type="submit" class="btn btn-warning">Редактировать</button>
             </div>
         </form>

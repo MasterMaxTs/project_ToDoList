@@ -51,17 +51,13 @@
     </nav><br><br>
     <div class="form-group">
         <h5 th:if="${item.done}==true"><span style="color: darkgreen">Сделано:</span></h5>
-        <h5 th:if="${item.done}!=true"><span style="color: crimson">Выполнить:</span></h5>
-        <table class="table table-bordered" >
-            <tbody>
-            <td th:text="${item.description}"></td>
-            </tbody>
-        </table>
+        <h5 th:if="${item.done}!=true"><span style="color: crimson">Выполнить:</span></h5><br>
+        <textarea th:text="${item.description}" cols="60" rows="12" readonly></textarea>
     </div>
         <div th:if="${item.done == false}">
             <form th:action="@{/formSetDoneItem}" method="GET">
                 <input type="hidden" name="id" th:value="${item.id}"/>
-                <button type="submit" class="btn btn-success" style="float: right">Выполнено</button>&nbsp&nbsp
+                <button type="submit" class="btn btn-success" style="float: left">Выполнено</button>
             </form>
             <form th:action="@{/formGetUpdateItem}" method="GET">
                 <input type="hidden" name="id" th:value="${item.id}">

@@ -50,17 +50,15 @@
     </nav>
     <div class="card-body">
         <form th:action="@{/login}" method="POST">
-            <div class="form-group"> Регистрационные данные: <br>
+            <div class="form-group"><b>Авторизация:</b><br>
                 <span th:if="${msg} != null" th:text="${msg}" style="color: crimson" ></span><br><br>
                 <label for="login">Login</label><br>
                 <input type="text" name="login" id="login"
                        placeholder="Введите login" required="required"/><br><br>
                 <label for="pwd">Password</label><br>
                 <input type="password" name="password" id="pwd"
-                       placeholder="Введите password" required="required"/><br>
-                <p>
-                    <button type="submit" class="btn btn-info" style="float: left">Войти</button>
-                </p>
+                       placeholder="Введите password" required="required"/><br><br>
+                <button type="submit" class="btn btn-info" style="float: left">Войти</button>
             </div>
         </form>
     </div>

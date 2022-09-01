@@ -48,7 +48,7 @@
             </div>
         </div>
     </nav>
-    <div class="card-body">
+    <div class="card-body"><b>Добавить пользователя:</b>
         <form th:action="@{/addUser}" method="POST">
             <div class="form-group">
                 <span th:if="${msg} != null" th:text="${msg}" style="color: crimson" ></span><br><br>
@@ -60,10 +60,8 @@
                        placeholder="Придумайте название" required="required"/><br><br>
                 <label for="pwd">Password</label><br>
                 <input type="password" name="password" id="pwd"
-                       placeholder="Придумайте пароль" required="required"/><br>
-                <p>
-                    <button type="submit" class="btn btn-info" style="float: left">Зарегистрировать</button>
-                </p>
+                       placeholder="Придумайте пароль" required="required"/><br><br>
+                <button type="submit" class="btn btn-info" style="float: left">Зарегистрировать</button>
             </div>
         </form>
     </div>
