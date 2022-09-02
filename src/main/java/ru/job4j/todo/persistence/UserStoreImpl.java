@@ -6,7 +6,6 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import ru.job4j.todo.entity.User;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -28,6 +27,7 @@ public class UserStoreImpl implements UserStore {
         return user;
     }
 
+    @Override
     public boolean findUserByLogin(String login) {
         Session session = sf.openSession();
         session.beginTransaction();
@@ -40,6 +40,7 @@ public class UserStoreImpl implements UserStore {
         return userInDb.isPresent();
     }
 
+    @Override
     public Optional<User> findUserByLoginAndPwd(String login, String password) {
         Session session = sf.openSession();
         session.beginTransaction();
@@ -51,18 +52,6 @@ public class UserStoreImpl implements UserStore {
         session.getTransaction().commit();
         session.close();
         return userInDb;
-    }
-
-    @Override
-    public List<User> findAll() {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        List<User> rsl = session.createQuery(
-                "from User", User.class
-        ).list();
-        session.getTransaction().commit();
-        session.close();
-        return rsl;
     }
 
     @Override
@@ -80,32 +69,6 @@ public class UserStoreImpl implements UserStore {
         session.getTransaction().commit();
         session.close();
         return rsl;
-    }
-
-    @Override
-    public boolean delete(int id) {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        boolean rsl = session.createQuery(
-                        "delete from User where id = :fId", User.class
-                ).setParameter("fId", id)
-                .executeUpdate() > 0;
-        session.getTransaction().commit();
-        session.close();
-        return rsl;
-    }
-
-    @Override
-    public User findById(int id) {
-        Session session = sf.openSession();
-        session.beginTransaction();
-        Query<User> query = session.createQuery(
-                "from User where id = :fId", User.class
-        ).setParameter("fId", id);
-        User user = query.uniqueResult();
-        session.getTransaction().commit();
-        session.close();
-        return user;
     }
 
     @Override

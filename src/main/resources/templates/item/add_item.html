@@ -49,14 +49,14 @@
             </div>
         </div>
     </nav>
-    <div class="card-body">
+    <div class="card-body"> <b>Новое задание:</b><br><br>
         <form th:action="@{/addItem}" method="POST">
             <div class="form-group">
                 <input type="hidden" name="done" value="false"/>
-                <label for="name">Задание</label><br>
+                <label for="name">Название</label><br>
                 <input type="text" name="name" id="name" size="40"
                        placeholder="Введите название" required="required"/><br><br>
-                <label for="desc">Описание задания</label><br>
+                <label for="desc">Описание</label><br>
                 <textarea name="description" id="desc" style="height: 250px; width: 600px"
                           placeholder="Введите описание" required="required"></textarea><br><br>
                 <button type="submit" class="btn btn-info" style="float: left">Создать</button>

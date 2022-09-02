@@ -50,13 +50,13 @@
             </div>
         </div>
     </nav>
-    <div class="card-body">
+    <div class="card-body"><b>Редактировать задание:</b> <br><br>
         <form th:action="@{/updateItem}" method="POST">
             <input type="hidden" name="id" th:value="${item.id}"/>
             <div class="form-group">
-                <label for="name">Название задания</label><br>
-                <input type="text" name="name" th:value="${item.name}" id="name"/><br><br>
-                <label for="desc">Описание задания</label><br>
+                <label for="name">Название</label><br>
+                <input type="text" name="name" th:value="${item.name}" size="50" id="name"/><br><br>
+                <label for="desc">Описание</label><br>
                 <textarea name="description" th:text="${item.description}"
                           id="desc" cols="60" rows="12"></textarea><br><br>
                 <button type="submit" class="btn btn-warning">Редактировать</button>

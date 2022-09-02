@@ -65,7 +65,7 @@
                 <td th:text="${item.id}"></td>
                 <td>
                     <a th:href="@{|/items/${item.id}|}">&nbsp&nbsp
-                        <i class="fa fa-eye" aria-hidden="true"></i>
+                        <i class="fa fa-eye" title="открыть описание" aria-hidden="true"></i>
                     </a> <span th:text="${item.name}"></span>
                 </td>
                 <td th:text="${item.created}"></td>

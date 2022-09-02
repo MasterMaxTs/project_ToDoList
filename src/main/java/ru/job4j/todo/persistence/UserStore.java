@@ -2,17 +2,15 @@ package ru.job4j.todo.persistence;
 
 import ru.job4j.todo.entity.User;
 
-import java.util.List;
+import java.util.Optional;
 
 public interface UserStore extends AutoCloseable {
 
     User add(User user);
 
-    List<User> findAll();
-
     boolean update(User user);
 
-    boolean delete(int id);
+    Optional<User> findUserByLoginAndPwd(String login, String password);
 
-    User findById(int id);
+    boolean findUserByLogin(String login);
 }

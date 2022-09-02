@@ -15,19 +15,55 @@
 Вид главной страницы приложения
 ![img.png](./screenshots/index.JPG)
 
-Вид страницы приложения по добавлению нового задания 
-![img.png](./screenshots/add_item.JPG)
+
+Вид страницы авторизации пользователя
+![img.png](./screenshots/authorization.JPG)
+
+
+Вид страницы не успешной авторизации пользователя
+![img.png](./screenshots/authorization_invalid.JPG)
+
+
+Вид страницы регистрации нового пользователя
+![img.png](./screenshots/registration.JPG)
+
+![img.png](./screenshots/registration_success.JPG)
+
+
+Вид страницы не успешной регистрации нового пользователя
+![img.png](./screenshots/registration_fail.JPG)
+
+
+Вид страницы приложения по добавлению нового задания
+![img.png](./screenshots/new_item.JPG)
 
 Вид страницы приложения с подробным описанием задания
-![img.png](./screenshots/description_item.JPG)
+![img.png](./screenshots/items.JPG)
+
+Страница описания задания
+![img.png](./screenshots/item_description.JPG)
 
 Вид страницы приложения для редактирования задания
-![img.png](./screenshots/update_item.JPG)
+![img.png](./screenshots/item_update.JPG)
+
+Вид страницы приложения для редактирования выполненного задания
+![img.png](./screenshots/index__.JPG)
+
+![img.png](./screenshots/item_done.JPG)
+
 
 Виды страниц приложения с разбивкой по статусу выполнения
-![img.png](./screenshots/completed_items.JPG)
 
-![img.png](./screenshots/new_items.JPG)
+Все задания
+![img.png](./screenshots/index_.JPG)
+
+Выполненные задания
+![img.png](./screenshots/items_completed.JPG)
+
+Новые задания
+![img.png](./screenshots/items_new.JPG)
+
+
 
 
 Используемые технологии в проекте:

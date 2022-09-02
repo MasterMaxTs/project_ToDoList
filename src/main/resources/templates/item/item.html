@@ -50,8 +50,8 @@
         </div>
     </nav><br><br>
     <div class="form-group">
-        <h5 th:if="${item.done}==true"><span style="color: darkgreen">Сделано:</span></h5>
-        <h5 th:if="${item.done}!=true"><span style="color: crimson">Выполнить:</span></h5><br>
+        <h5 th:if="${item.done}==true" style="color: darkgreen">Сделано: <span th:text="${item.name}"></span></h5><br>
+        <h5 th:if="${item.done}!=true" style="color: crimson">Выполнить: <span th:text="${item.name}"></span></h5><br>
         <textarea th:text="${item.description}" cols="60" rows="12" readonly></textarea>
     </div>
         <div th:if="${item.done == false}">

@@ -96,7 +96,9 @@ public class ItemController implements ManageSession {
     @PostMapping("/addItem")
     public String add(@ModelAttribute Item item, Model model) {
         User user = (User) model.getAttribute("user");
-        item.setCreated(Timestamp.valueOf(LocalDateTime.now()));
+        item.setCreated(
+                Timestamp.valueOf(LocalDateTime.now().withNano(0))
+        );
         item.setUserId(user.getId());
         itemService.create(item);
         return "redirect:/index";
@@ -105,7 +107,9 @@ public class ItemController implements ManageSession {
     @PostMapping("updateItem")
     public String update(@ModelAttribute Item item, Model model) {
         User user = (User) model.getAttribute("user");
-        item.setCreated(Timestamp.valueOf(LocalDateTime.now()));
+        item.setCreated(
+                Timestamp.valueOf(LocalDateTime.now().withNano(0))
+        );
         item.setUserId(user.getId());
         itemService.update(item);
         return "redirect:/index";
