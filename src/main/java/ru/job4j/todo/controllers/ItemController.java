@@ -1,5 +1,6 @@
 package ru.job4j.todo.controllers;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,13 +13,10 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Controller
+@AllArgsConstructor
 public class ItemController implements ManageSession {
 
     private final ItemService itemService;
-
-    public ItemController(ItemService service) {
-        this.itemService = service;
-    }
 
     @ModelAttribute("user")
     public User getUser(HttpSession session) {

@@ -66,10 +66,9 @@
 
 
 
-Используемые технологии в проекте:
-- Spring boot.
-- Thymeleaf.
-- Bootstrap.
-- Hibernate.
-- Lombok.
-- СУБД: PostgreSQL.
+Стек технологий:
+ - Spring boot.
+ - Thymeleaf.
+ - Bootstrap.
+ - Hibernate.
+ - PostgreSql. 

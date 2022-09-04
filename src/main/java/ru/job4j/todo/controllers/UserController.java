@@ -1,5 +1,6 @@
 package ru.job4j.todo.controllers;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,13 +16,10 @@ import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @Controller
+@AllArgsConstructor
 public class UserController implements ManageSession {
 
     private final UserService service;
-
-    public UserController(UserService service) {
-        this.service = service;
-    }
 
     @ModelAttribute("user")
     public User getUser(HttpSession session) {

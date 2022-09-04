@@ -1,5 +1,6 @@
 package ru.job4j.todo.persistence;
 
+import lombok.AllArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
@@ -8,13 +9,10 @@ import ru.job4j.todo.entity.Item;
 import java.util.List;
 
 @Repository
+@AllArgsConstructor
 public class ItemStoreImpl implements ItemStore {
 
     private final SessionFactory sf;
-
-    public ItemStoreImpl(SessionFactory sf) {
-        this.sf = sf;
-    }
 
     @Override
     public Item create(Item item) {

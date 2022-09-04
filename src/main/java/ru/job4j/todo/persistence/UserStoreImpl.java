@@ -1,5 +1,6 @@
 package ru.job4j.todo.persistence;
 
+import lombok.AllArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -9,13 +10,10 @@ import ru.job4j.todo.entity.User;
 import java.util.Optional;
 
 @Repository
+@AllArgsConstructor
 public class UserStoreImpl implements UserStore {
 
     private final SessionFactory sf;
-
-    public UserStoreImpl(SessionFactory sf) {
-        this.sf = sf;
-    }
 
     @Override
     public User add(User user) {
