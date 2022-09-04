@@ -6,9 +6,21 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Set;
 
 @Component
 public class AuthFilter implements Filter {
+
+    private static final Set<String> STRINGS = Set.of("index",
+                                                      "items",
+                                                      "formAddUser",
+                                                      "addUser",
+                                                      "loginPage",
+                                                      "login");
+
+    private boolean isEnds(String url) {
+        return STRINGS.stream().anyMatch(url::endsWith);
+    }
 
     @Override
     public void doFilter(
@@ -18,12 +30,7 @@ public class AuthFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         String url = req.getRequestURI();
-        if (url.endsWith("index")
-                || url.endsWith("items")
-                || url.endsWith("formAddUser")
-                || url.endsWith("addUser")
-                || url.endsWith("loginPage")
-                || url.endsWith("login")) {
+        if (isEnds(url)) {
             chain.doFilter(req, res);
             return;
         }
@@ -31,7 +38,6 @@ public class AuthFilter implements Filter {
             res.sendRedirect(req.getContextPath() + "/loginPage");
             return;
         }
-
         chain.doFilter(req, res);
         }
     }
