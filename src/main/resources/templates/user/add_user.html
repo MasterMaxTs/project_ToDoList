@@ -33,34 +33,34 @@
                 <a class="nav-item nav-link" th:href="@{/completed_items}">Выполненные</a>
                 <a class="nav-item nav-link" th:href="@{/new_items}">Новые</a>
                 <a class="nav-item nav-link active" th:href="@{/formAddUser}"><b>Регистрация</b></a>
-                <a class="nav-item nav-link" th:if="${user.name == 'Гость'}">
+                <a class="nav-item nav-link" th:if="${current.name == 'Гость'}">
                     <form th:action="@{/loginPage}" method="GET">
-                        <button type="submit" class="btn btn-info"><span th:text="${user.name}"></span> | Войти</button>
+                        <button type="submit" class="btn btn-info"><span th:text="${current.name}"></span> | Войти</button>
                     </form>
                 </a>
-                <a class="nav-item nav-link" th:if="${user.name != 'Гость'}" th:href="@{/formUpdateUser}">Редактировать</a>&nbsp&nbsp
-                <a class="nav-item nav-link" th:if="${user.name != 'Гость'}">
+                <a class="nav-item nav-link" th:if="${current.name != 'Гость'}" th:href="@{/formUpdateUser}">Редактировать</a>&nbsp&nbsp
+                <a class="nav-item nav-link" th:if="${current.name != 'Гость'}">
                     <form th:action="@{/logout}" method="GET">
                         <button type="submit" class="btn btn-success">
-                            <span th:text="${user.name}"></span> | Выйти</button>
+                            <span th:text="${current.name}"></span> | Выйти</button>
                     </form>
                 </a>
             </div>
         </div>
     </nav>
-    <div class="card-body"><b>Добавить пользователя:</b>
-        <form th:action="@{/addUser}" method="POST">
+    <div class="card-body"><b>Добавить пользователя:</b><br><br>
+        <form th:action="@{/addUser}" method="POST" th:object="${user}">
             <div class="form-group">
-                <span th:if="${msg} != null" th:text="${msg}" style="color: crimson" ></span><br><br>
                 <label for="name">Имя</label><br>
-                <input type="text" name="name" th:value="${name}" id="name"
-                       placeholder="Введите имя" required="required"/><br><br>
+                <input type="text" id="name"
+                       placeholder="Введите имя" required th:field="*{name}"/><br><br>
                 <label for="login">Login</label><br>
                 <input type="text" name="login" id="login"
-                       placeholder="Придумайте название" required="required"/><br><br>
+                       placeholder="Придумайте название" required th:field="*{login}"/>
+                <span th:if="${msg} != null" th:text="${msg}" style="color: crimson" ></span><br><br>
                 <label for="pwd">Password</label><br>
-                <input type="password" name="password" id="pwd"
-                       placeholder="Придумайте пароль" required="required"/><br><br>
+                <input type="password" id="pwd"
+                       placeholder="Придумайте пароль" required th:field="*{password}"/><br><br>
                 <button type="submit" class="btn btn-info" style="float: left">Зарегистрировать</button>
             </div>
         </form>

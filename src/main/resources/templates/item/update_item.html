@@ -34,31 +34,30 @@
                 <a class="nav-item nav-link" th:href="@{/completed_items}">Выполненные</a>
                 <a class="nav-item nav-link" th:href="@{/new_items}">Новые</a>
                 <a class="nav-item nav-link" th:href="@{/formAddUser}">Регистрация</a>
-                <a class="nav-item nav-link" th:if="${user.name == 'Гость'}">
+                <a class="nav-item nav-link" th:if="${current.name == 'Гость'}">
                     <form th:action="@{/loginPage}" method="GET">
-                        <button type="submit" class="btn btn-info">
-                            <span th:text="${user.name}"></span> | Войти</button>
+                        <button type="submit" class="btn btn-info"><span th:text="${current.name}"></span> | Войти</button>
                     </form>
                 </a>
-                <a class="nav-item nav-link" th:if="${user.name != 'Гость'}" th:href="@{/formUpdateUser}">Редактировать</a> &nbsp&nbsp
-                <a class="nav-item nav-link" th:if="${user.name != 'Гость'}">
+                <a class="nav-item nav-link" th:if="${current.name != 'Гость'}" th:href="@{/formUpdateUser}">Редактировать</a>&nbsp&nbsp
+                <a class="nav-item nav-link" th:if="${current.name != 'Гость'}">
                     <form th:action="@{/logout}" method="GET">
                         <button type="submit" class="btn btn-success">
-                            <span th:text="${user.name}"></span> | Выйти</button>
+                            <span th:text="${current.name}"></span> | Выйти</button>
                     </form>
                 </a>
             </div>
         </div>
     </nav>
     <div class="card-body"><b>Редактировать задание:</b> <br><br>
-        <form th:action="@{/updateItem}" method="POST">
+        <form th:action="@{/updateItem}" method="POST" th:object="${item}">
             <input type="hidden" name="id" th:value="${item.id}"/>
+            <input type="hidden" name="userId" th:value="${item.userId}"/>
             <div class="form-group">
                 <label for="name">Название</label><br>
-                <input type="text" name="name" th:value="${item.name}" size="50" id="name"/><br><br>
+                <input type="text" size="50" id="name" th:field="*{name}"/><br><br>
                 <label for="desc">Описание</label><br>
-                <textarea name="description" th:text="${item.description}"
-                          id="desc" cols="60" rows="12"></textarea><br><br>
+                <textarea id="desc" cols="60" rows="12" th:field="*{description}"></textarea><br><br>
                 <button type="submit" class="btn btn-warning">Редактировать</button>
             </div>
         </form>

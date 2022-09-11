@@ -1,4 +1,4 @@
-package ru.job4j.todo.persistence;
+package ru.job4j.todo.persistence.itemstore;
 
 import lombok.AllArgsConstructor;
 import org.hibernate.Session;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 @AllArgsConstructor
-public class ItemStoreImpl implements ItemStore {
+public class ItemDbStore implements ItemStore {
 
     private final SessionFactory sf;
 

@@ -34,23 +34,23 @@
                 <a class="nav-item nav-link" th:href="@{/completed_items}">Выполненные</a>
                 <a class="nav-item nav-link" th:href="@{/new_items}">Новые</a>
                 <a class="nav-item nav-link" th:href="@{/formAddUser}">Регистрация</a>
-                <a class="nav-item nav-link" th:if="${user.name == 'Гость'}">
+                <a class="nav-item nav-link" th:if="${current.name == 'Гость'}">
                     <form th:action="@{/loginPage}" method="GET">
-                        <button type="submit" class="btn btn-info"><span th:text="${user.name}"></span> | Войти</button>
+                        <button type="submit" class="btn btn-info"><span th:text="${current.name}"></span> | Войти</button>
                     </form>
                 </a>
-                <a class="nav-item nav-link" th:if="${user.name != 'Гость'}" th:href="@{/formUpdateUser}">Редактировать</a>&nbsp&nbsp
-                <a class="nav-item nav-link" th:if="${user.name != 'Гость'}">
+                <a class="nav-item nav-link" th:if="${current.name != 'Гость'}" th:href="@{/formUpdateUser}">Редактировать</a>&nbsp&nbsp
+                <a class="nav-item nav-link" th:if="${current.name != 'Гость'}">
                     <form th:action="@{/logout}" method="GET">
                         <button type="submit" class="btn btn-success">
-                            <span th:text="${user.name}"></span> | Выйти</button>
+                            <span th:text="${current.name}"></span> | Выйти</button>
                     </form>
                 </a>
             </div>
         </div>
     </nav>
     <div class="row">
-        <table class="table">
+        <table class="table table-striped">
             <caption style="caption-side: top; text-align: right">Весь список</caption>
             <thead>
                 <tr>
@@ -64,9 +64,12 @@
                 <tr th:each="item: ${items}">
                     <td th:text="${item.id}"></td>
                     <td>
-                        <a th:href="@{|/items/${item.id}|}">&nbsp&nbsp
+                        <a th:href="@{|/items/${item.id}/edit|}">
                             <i class="fa fa-eye" title="открыть описание" aria-hidden="true"></i>
-                        </a> <span th:text="${item.name}"></span>
+                        </a>
+                        <a th:if="${item.done} == true" th:href="@{|/items/${item.id}/delete|}">
+                            <i class="fa fa-trash" title="удалить"></i>
+                        </a><span th:text="${item.name}"></span>
                     </td>
                     <td th:text="${item.created}"></td>
                     <td th:if="${item.done} == true">выполнено</td>

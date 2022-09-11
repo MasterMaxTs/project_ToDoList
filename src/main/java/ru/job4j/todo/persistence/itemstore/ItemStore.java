@@ -1,4 +1,4 @@
-package ru.job4j.todo.persistence;
+package ru.job4j.todo.persistence.itemstore;
 
 import ru.job4j.todo.entity.Item;
 
@@ -9,6 +9,10 @@ public interface ItemStore extends AutoCloseable {
     Item create(Item item);
 
     List<Item> findAll(int userId);
+
+    List<Item> findCompleted(int userId);
+
+    List<Item> findNew(int userId);
 
     boolean update(Item item);
 

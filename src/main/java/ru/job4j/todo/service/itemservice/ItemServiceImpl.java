@@ -1,40 +1,44 @@
-package ru.job4j.todo.services;
+package ru.job4j.todo.service.itemservice;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.todo.entity.Item;
-import ru.job4j.todo.persistence.ItemStoreImpl;
+import ru.job4j.todo.persistence.itemstore.ItemStore;
 
 import java.util.List;
 
 @Service
-public class ItemService {
+@AllArgsConstructor
+public class ItemServiceImpl implements ItemService {
 
-    private final ItemStoreImpl store;
+    private final ItemStore store;
 
-    public ItemService(ItemStoreImpl store) {
-        this.store = store;
-    }
-
+    @Override
     public Item create(Item item) {
         return store.create(item);
     }
 
+    @Override
     public List<Item> findAll(int userId) {
         return store.findAll(userId);
     }
 
+    @Override
     public List<Item> findCompleted(int userId) {
         return store.findCompleted(userId);
     }
 
+    @Override
     public List<Item> findNew(int userId) {
         return store.findNew(userId);
     }
 
+    @Override
     public boolean update(Item item) {
         return store.update(item);
     }
 
+    @Override
     public boolean delete(int id, int userId) {
         return store.delete(id, userId);
     }

@@ -1,4 +1,4 @@
-package ru.job4j.todo.controllers;
+package ru.job4j.todo.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.job4j.todo.entity.User;
-import ru.job4j.todo.services.UserService;
+import ru.job4j.todo.service.userservice.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -21,54 +21,65 @@ public class UserController implements ManageSession {
 
     private final UserService service;
 
-    @ModelAttribute("user")
+    @ModelAttribute("current")
     public User getUser(HttpSession session) {
         return getUserFromSession(session);
     }
 
     @GetMapping("/formAddUser")
-    public String formAddUser(Model model,
-                              @RequestParam(value = "name", required = false) String name,
-                              @RequestParam(value = "msg", required = false) String message) {
-        model.addAttribute("name", name);
+    public String formAddUser(@ModelAttribute User user,
+                              @RequestParam(value = "msg", required = false) String message,
+                              Model model) {
         model.addAttribute("msg", message);
         return "user/add_user";
     }
 
     @PostMapping("/addUser")
-    public String addUser(HttpServletRequest req,
-                          RedirectAttributes ra,
+    public String addUser(@ModelAttribute User user,
+                          HttpServletRequest req,
                           Model model) {
-        String name = req.getParameter("name");
-        String login = req.getParameter("login");
-        String password = req.getParameter("password");
-        if (!service.findUserByLogin(login)) {
-            User user = new User(name, login, password);
+        if (!service.findUserByLogin(user.getLogin())) {
             service.add(user);
             HttpSession session = req.getSession();
-            session.setAttribute("user", user);
+            session.setAttribute("current", user);
             model.addAttribute("name", user.getName());
             return "user/login_success";
         }
         String message = String.format(
-                "Уважаемый, %s! Пользователь с login = %s уже существует! "
-                        + "Придумайте другой login!", name, login
+                "Уважаемый/ая, %s! Пользователь с login = %s уже существует! "
+                        + "Придумайте другой login!", user.getName(), user.getLogin()
         );
-        ra.addAttribute("name", name);
-        ra.addAttribute("msg", message);
-        return "redirect:/formAddUser";
+        model.addAttribute("msg", message);
+        return "user/add_user";
     }
 
     @GetMapping("/formUpdateUser")
-    public String formGetUpdate() {
+    public String formGetUpdate(@RequestParam(value = "msg", required = false) String message,
+                                Model model) {
+        model.addAttribute("msg", message);
         return "user/update_user";
     }
 
     @PostMapping("/updateUser")
-    public String update(@ModelAttribute User user, Model model) {
-        User current = (User) model.getAttribute("user");
-        user.setId(current.getId());
-        service.update(user);
+    public String update(@ModelAttribute User user,
+                         Model model,
+                         RedirectAttributes ra,
+                         HttpServletRequest req) {
+        String name = user.getName();
+        String login = user.getLogin();
+        User current = (User) model.getAttribute("current");
+        String currentLogin = current.getLogin();
+        if (service.findUserByLogin(login) && !login.equals(currentLogin)) {
+            String message = String.format(
+                    "Уважаемый/ая, %s! Пользователь с login = %s уже "
+                            + "существует! Придумайте другой login!", name, login
+            );
+            ra.addAttribute("msg", message);
+            return "redirect:/formUpdateUser";
+        }
+        HttpSession session = req.getSession();
+        session.setAttribute("current", service.update(user));
+
         return "redirect:/index";
     }
 
@@ -90,7 +101,7 @@ public class UserController implements ManageSession {
             return "redirect:/loginPage";
         }
         HttpSession session = req.getSession();
-        session.setAttribute("user", userInDb.get());
+        session.setAttribute("current", userInDb.get());
         return "redirect:/index";
     }
 

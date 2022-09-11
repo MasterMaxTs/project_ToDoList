@@ -33,23 +33,23 @@
                 <a class="nav-item nav-link" th:href="@{/completed_items}">Выполненные</a>
                 <a class="nav-item nav-link" th:href="@{/new_items}">Новые</a>
                 <a class="nav-item nav-link" th:href="@{/formAddUser}"><b>Регистрация</b></a>
-                <a class="nav-item nav-link" th:if="${user.name == 'Гость'}">
+                <a class="nav-item nav-link" th:if="${current.name == 'Гость'}">
                     <form th:action="@{/loginPage}" method="GET">
-                        <button type="submit" class="btn btn-info"><span th:text="${user.name}"></span> | Войти</button>
+                        <button type="submit" class="btn btn-info"><span th:text="${current.name}"></span> | Войти</button>
                     </form>
                 </a>
-                <a class="nav-item nav-link" th:if="${user.name != 'Гость'}" th:href="@{/formUpdateUser}">Редактировать</a>&nbsp&nbsp
-                <a class="nav-item nav-link" th:if="${user.name != 'Гость'}">
+                <a class="nav-item nav-link" th:if="${current.name != 'Гость'}" th:href="@{/formUpdateUser}">Редактировать</a>&nbsp&nbsp
+                <a class="nav-item nav-link" th:if="${current.name != 'Гость'}">
                     <form th:action="@{/logout}" method="GET">
                         <button type="submit" class="btn btn-success">
-                            <span th:text="${user.name}"></span> | Выйти</button>
+                            <span th:text="${current.name}"></span> | Выйти</button>
                     </form>
                 </a>
             </div>
         </div>
     </nav>
     <div class="card-body">
-        <p> Уважаемый, <span th:text="${name}"></span>! Вы успешно зарегистрировались в приложении!!!</p><br>
+        <p> Уважаемый/ая, <span th:text="${name}"></span>! Вы успешно зарегистрировались в приложении!!!</p><br>
         <form th:action="@{/items/new}" method="GET">
             <button type="submit" class="btn btn-primary">Добавить задание</button>
         </form>

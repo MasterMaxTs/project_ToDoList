@@ -1,33 +1,35 @@
-package ru.job4j.todo.services;
+package ru.job4j.todo.service.userservice;
 
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.todo.entity.User;
-import ru.job4j.todo.persistence.UserStoreImpl;
+import ru.job4j.todo.persistence.userstore.UserStore;
 
 import java.util.Optional;
 
 @Service
-public class UserService {
+@AllArgsConstructor
+public class UserServiceImpl implements UserService {
 
-    private final UserStoreImpl store;
+    private final UserStore store;
 
-    public UserService(UserStoreImpl store) {
-        this.store = store;
-    }
-
+    @Override
     public User add(User user) {
         return store.add(user);
     }
 
+    @Override
     public boolean findUserByLogin(String login) {
         return store.findUserByLogin(login);
     }
 
+    @Override
     public Optional<User> findUserByLoginAndPwd(String login, String password) {
         return store.findUserByLoginAndPwd(login, password);
     }
 
-    public boolean update(User user) {
+    @Override
+    public User update(User user) {
         return store.update(user);
     }
 }

@@ -1,4 +1,4 @@
-package ru.job4j.todo.persistence;
+package ru.job4j.todo.persistence.userstore;
 
 import lombok.AllArgsConstructor;
 import org.hibernate.Session;
@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
-public class UserStoreImpl implements UserStore {
+public class UserDbStore implements UserStore {
 
     private final SessionFactory sf;
 
@@ -53,20 +53,20 @@ public class UserStoreImpl implements UserStore {
     }
 
     @Override
-    public boolean update(User user) {
+    public User update(User user) {
         Session session = sf.openSession();
         session.beginTransaction();
-        boolean rsl = session.createQuery(
+        session.createQuery(
                         "update User set name = :fName, login = :fLogin"
                                 + ", password = :fPwd where id = :fId "
                 ).setParameter("fName", user.getName())
                 .setParameter("fLogin", user.getLogin())
                 .setParameter("fPwd", user.getPassword())
                 .setParameter("fId", user.getId())
-                .executeUpdate() > 0;
+                .executeUpdate();
         session.getTransaction().commit();
         session.close();
-        return rsl;
+        return user;
     }
 
     @Override
