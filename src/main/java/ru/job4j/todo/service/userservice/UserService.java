@@ -8,7 +8,7 @@ public interface UserService {
 
     User add(User user);
 
-    User update(User user);
+    void update(User user);
 
     Optional<User> findUserByLoginAndPwd(String login, String password);
 

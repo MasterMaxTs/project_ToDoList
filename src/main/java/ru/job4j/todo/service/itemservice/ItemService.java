@@ -14,9 +14,9 @@ public interface ItemService {
 
     List<Item> findNew(int userId);
 
-    boolean update(Item item);
+    void update(Item item);
 
-    boolean delete(int id, int userId);
+    void delete(int id, int userId);
 
     Item findById(int id, int userId);
 }

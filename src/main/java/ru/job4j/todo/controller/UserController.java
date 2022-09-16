@@ -77,8 +77,9 @@ public class UserController implements ManageSession {
             ra.addAttribute("msg", message);
             return "redirect:/formUpdateUser";
         }
+        service.update(user);
         HttpSession session = req.getSession();
-        session.setAttribute("current", service.update(user));
+        session.setAttribute("current", user);
 
         return "redirect:/index";
     }

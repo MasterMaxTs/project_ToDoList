@@ -34,13 +34,13 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public boolean update(Item item) {
-        return store.update(item);
+    public void update(Item item) {
+        store.update(item);
     }
 
     @Override
-    public boolean delete(int id, int userId) {
-        return store.delete(id, userId);
+    public void delete(int id, int userId) {
+        store.delete(id, userId);
     }
 
     public Item findById(int id, int userId) {

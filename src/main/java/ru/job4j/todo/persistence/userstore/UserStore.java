@@ -4,11 +4,11 @@ import ru.job4j.todo.entity.User;
 
 import java.util.Optional;
 
-public interface UserStore extends AutoCloseable {
+public interface UserStore {
 
     User add(User user);
 
-    User update(User user);
+    void update(User user);
 
     Optional<User> findUserByLoginAndPwd(String login, String password);
 

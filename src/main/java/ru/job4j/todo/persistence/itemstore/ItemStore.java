@@ -4,7 +4,7 @@ import ru.job4j.todo.entity.Item;
 
 import java.util.List;
 
-public interface ItemStore extends AutoCloseable {
+public interface ItemStore {
 
     Item create(Item item);
 
@@ -14,9 +14,9 @@ public interface ItemStore extends AutoCloseable {
 
     List<Item> findNew(int userId);
 
-    boolean update(Item item);
+    void update(Item item);
 
-    boolean delete(int id, int userId);
+    void delete(int id, int userId);
 
     Item findById(int id, int userId);
 }
