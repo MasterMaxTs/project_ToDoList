@@ -3,6 +3,7 @@ package ru.job4j.todo.persistence.itemstore;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import ru.job4j.todo.entity.Item;
+import ru.job4j.todo.entity.User;
 import ru.job4j.todo.persistence.crudrepository.CrudRepository;
 
 import java.util.List;
@@ -21,44 +22,56 @@ public class ItemDbStore implements ItemStore {
      */
     @Override
     public Item create(Item item) {
-        crudRepository.run(session -> session.persist(item));
+        crudRepository.run(session -> session.save(item));
         return item;
     }
 
     /**
-     * Список задач, отсортированных по id.
-     * @param userId id текущего пользователя.
+     * Список задач, отсортированных по дате создания от ранних к поздним.
      * @return список задач.
      */
     @Override
-    public List<Item> findAll(int userId) {
+    public List<Item> findAll() {
+        return crudRepository.query("from Item order by created desc", Item.class);
+    }
+
+    /**
+     * Список задач, отсортированных по id.
+     * @param user текущий пользователь.
+     * @return список задач.
+     */
+    @Override
+    public List<Item> findAll(User user) {
         return crudRepository.query(
-                "from Item where userId = :fId", Item.class, Map.of("fId",
-                        userId)
+                "from Item where user = :fUser",
+                Item.class,
+                Map.of("fUser", user)
         );
     }
 
     /**
      * Список завершенных задач, отсортированных по id.
-     * @param userId id текущего пользователя.
+     * @param user текущий пользователь.
      * @return список завершенных задач.
      */
-    public List<Item> findCompleted(int userId) {
+    @Override
+    public List<Item> findCompleted(User user) {
         return crudRepository.query(
-                "from Item where userId = :fId AND done = :isDone", Item.class,
-                Map.of("fId", userId, "isDone", true)
+                "from Item where user = :fUser AND done = :isDone", Item.class,
+                Map.of("fUser", user, "isDone", true)
         );
     }
 
     /**
      * Список новых задач, отсортированных по id.
-     * @param userId id текущего пользователя.
+     * @param user текущий пользователь.
      * @return список новых задач.
      */
-    public List<Item> findNew(int userId) {
+    @Override
+    public List<Item> findNew(User user) {
         return crudRepository.query(
-                "from Item where userId = :fId AND done = :isDone", Item.class,
-                Map.of("fId", userId, "isDone", false)
+                "from Item where user = :fUser AND done = :isDone", Item.class,
+                Map.of("fUser", user, "isDone", false)
         );
     }
 
@@ -74,26 +87,26 @@ public class ItemDbStore implements ItemStore {
     /**
      * удалить в базе задачу
      * @param id id задачи,
-     * @param userId id текущего пользователя
+     * @param user текущий пользователь
      */
     @Override
-    public void delete(int id, int userId) {
+    public void delete(int id, User user) {
         crudRepository.run(
-                "delete from Item where id = :fId AND userId = :fUid",
-                Map.of("fId", id, "fUid", userId)
+                "delete from Item where id = :fId AND user = :fUser",
+                Map.of("fId", id, "fUser", user)
         );
     }
 
     /**
      * найти в базе задачу по ID.
      * @param id id задачи,
-     * @param userId id текущего пользователя
+     * @param user текущий пользователь
      */
     @Override
-    public Item findById(int id, int userId) {
+    public Item findById(int id, User user) {
         return crudRepository.optional(
-                "from Item where id = :fId AND userId = :fUid", Item.class,
-                Map.of("fId", id, "fUid", userId)
+                "from Item where id = :fId AND user = :fUser", Item.class,
+                Map.of("fId", id, "fUser", user)
         ).orElseThrow(
                 () -> new NullPointerException(
                        String.format("задачи с id = %d не найдено в БД", id)

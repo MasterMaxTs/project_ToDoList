@@ -39,6 +39,19 @@ public class UserDbStore implements UserStore {
     }
 
     /**
+     * Удалить пользователя в базе по id.
+     * @param id id пользователя.
+     */
+
+    @Override
+    public void deleteById(int id) {
+        crudRepository.run(
+                "delete from User where id = :fId",
+                Map.of("fId", id)
+        );
+    }
+
+    /**
      * Найти пользователя в базе по login и password.
      * @param login login пользователя.
      * @param password password пользователя.

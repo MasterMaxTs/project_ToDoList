@@ -32,8 +32,10 @@ public class Item {
     @Column(name = "done")
     private boolean done;
 
-    @Column(name = "user_id")
-    private int userId;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH,
+            CascadeType.DETACH, CascadeType.MERGE})
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Item(String name, String description, boolean done) {
         this.name = name;

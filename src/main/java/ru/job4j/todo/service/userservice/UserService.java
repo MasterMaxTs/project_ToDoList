@@ -13,4 +13,6 @@ public interface UserService {
     Optional<User> findUserByLoginAndPwd(String login, String password);
 
     boolean findUserByLogin(String login);
+
+    void deleteById(int id);
 }

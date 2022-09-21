@@ -24,6 +24,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void deleteById(int id) {
+        store.deleteById(id);
+    }
+
+    @Override
     public Optional<User> findUserByLoginAndPwd(String login, String password) {
         return store.findUserByLoginAndPwd(login, password);
     }

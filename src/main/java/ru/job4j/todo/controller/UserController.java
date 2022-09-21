@@ -3,10 +3,7 @@ package ru.job4j.todo.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.job4j.todo.entity.User;
 import ru.job4j.todo.service.userservice.UserService;
@@ -19,7 +16,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserController implements ManageSession {
 
-    private final UserService service;
+    private final UserService userService;
 
     @ModelAttribute("current")
     public User getUser(HttpSession session) {
@@ -38,8 +35,8 @@ public class UserController implements ManageSession {
     public String addUser(@ModelAttribute User user,
                           HttpServletRequest req,
                           Model model) {
-        if (!service.findUserByLogin(user.getLogin())) {
-            service.add(user);
+        if (!userService.findUserByLogin(user.getLogin())) {
+            userService.add(user);
             HttpSession session = req.getSession();
             session.setAttribute("current", user);
             model.addAttribute("name", user.getName());
@@ -69,7 +66,7 @@ public class UserController implements ManageSession {
         String login = user.getLogin();
         User current = (User) model.getAttribute("current");
         String currentLogin = current.getLogin();
-        if (service.findUserByLogin(login) && !login.equals(currentLogin)) {
+        if (userService.findUserByLogin(login) && !login.equals(currentLogin)) {
             String message = String.format(
                     "Уважаемый/ая, %s! Пользователь с login = %s уже "
                             + "существует! Придумайте другой login!", name, login
@@ -77,7 +74,7 @@ public class UserController implements ManageSession {
             ra.addAttribute("msg", message);
             return "redirect:/formUpdateUser";
         }
-        service.update(user);
+        userService.update(user);
         HttpSession session = req.getSession();
         session.setAttribute("current", user);
 
@@ -93,7 +90,7 @@ public class UserController implements ManageSession {
 
     @PostMapping("/login")
     public String login(HttpServletRequest req, RedirectAttributes ra) {
-        Optional<User> userInDb = service.findUserByLoginAndPwd(
+        Optional<User> userInDb = userService.findUserByLoginAndPwd(
                 req.getParameter("login"), req.getParameter("password")
         );
         if (userInDb.isEmpty()) {

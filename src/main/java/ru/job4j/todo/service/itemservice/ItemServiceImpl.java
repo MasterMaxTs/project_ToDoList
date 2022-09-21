@@ -3,6 +3,7 @@ package ru.job4j.todo.service.itemservice;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.todo.entity.Item;
+import ru.job4j.todo.entity.User;
 import ru.job4j.todo.persistence.itemstore.ItemStore;
 
 import java.util.List;
@@ -19,18 +20,23 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> findAll(int userId) {
-        return store.findAll(userId);
+    public List<Item> findAll() {
+        return store.findAll();
     }
 
     @Override
-    public List<Item> findCompleted(int userId) {
-        return store.findCompleted(userId);
+    public List<Item> findAll(User user) {
+        return store.findAll(user);
     }
 
     @Override
-    public List<Item> findNew(int userId) {
-        return store.findNew(userId);
+    public List<Item> findCompleted(User user) {
+        return store.findCompleted(user);
+    }
+
+    @Override
+    public List<Item> findNew(User user) {
+        return store.findNew(user);
     }
 
     @Override
@@ -39,11 +45,11 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public void delete(int id, int userId) {
-        store.delete(id, userId);
+    public void delete(int id, User user) {
+        store.delete(id, user);
     }
 
-    public Item findById(int id, int userId) {
-        return store.findById(id, userId);
+    public Item findById(int id, User user) {
+        return store.findById(id, user);
     }
 }

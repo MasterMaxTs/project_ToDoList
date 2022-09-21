@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<head lang="en">
+<html lang="en">
+<head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -29,18 +30,19 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-                <a class="nav-item nav-link" th:href="@{/items}">Все</a>
+                <a class="nav-item nav-link" th:href="@{/items}"><b>Все</b></a>
                 <a class="nav-item nav-link" th:href="@{/completed_items}">Выполненные</a>
                 <a class="nav-item nav-link" th:href="@{/new_items}">Новые</a>
-                <a class="nav-item nav-link" th:href="@{/formAddUser}"><b>Регистрация</b></a>
+                <a class="nav-item nav-link" th:href="@{/formAddUser}">Регистрация</a>
                 <a class="nav-item nav-link" th:if="${current.name == 'Гость'}">
                     <form th:action="@{/loginPage}" method="GET">
                         <button type="submit" class="btn btn-info"><span th:text="${current.name}"></span> | Войти</button>
                     </form>
                 </a>
                 <a th:if="${current.name != 'Гость'}">
-                    <a class="nav-item nav-link active" th:href="@{/formUpdateUser}">Редактировать</a>&nbsp&nbsp
-                    <a class="nav-item nav-link" th:if="${current.login == 'admin'}" th:href="@{/itemsOfUsers}">Задачи пользователей</a>&nbsp&nbsp
+                    <a class="nav-item nav-link" th:href="@{/formUpdateUser}">Редактировать</a>&nbsp&nbsp
+                    <a class="nav-item nav-link active" th:if="${current.login == 'admin'}"
+                       th:href="@{/itemsOfUsers}"><b>Задачи пользователей</b></a>&nbsp&nbsp
                     <a class="nav-item nav-link">
                         <form th:action="@{/logout}" method="GET">
                             <button type="submit" class="btn btn-success">
@@ -51,20 +53,31 @@
             </div>
         </div>
     </nav>
-    <div class="card-body">
-        <form th:action="@{/updateUser}" method="POST" th:object="${current}">
-            <div class="form-group">
-                <input type="hidden" name="id" th:value="${current.id}"/>
-                <label for="name">Имя</label><br>
-                <input type="text" id="name" placeholder="Введите имя" required th:field="*{name}"/><br><br>
-                <label for="login">Login</label><br>
-                <input type="text" id="login" placeholder="Придумайте название" required th:field="*{login}"/>
-                <span th:if="${msg} != null" th:text="${msg}" style="color: crimson" ></span><br><br>
-                <label for="pwd">Password</label><br>
-                <input type="password" id="pwd" placeholder="Придумайте пароль" required th:field="*{password}"/><br><br>
-                <button type="submit" class="btn btn-info" style="float: left">Редактировать</button>
-            </div>
-        </form>
+    <div class="row">
+        <table class="table table-striped">
+            <caption style="caption-side: top; text-align: right">Задачи пользователей</caption>
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Название</th>
+                <th scope="col">Дата создания</th>
+                <th scope="col">Состояние</th>
+                <th scope="col">User name</th>
+                <th scope="col">User login</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item: ${items}">
+                <td th:text="${item.id}"></td>
+                <td th:text="${item.name}"></td>
+                <td th:text="${item.created}"></td>
+                <td th:if="${item.done} == true">выполнено</td>
+                <td th:if="${item.done} != true"> не выполнено</td>
+                <td th:text="${item.user.name}"></td>
+                <td th:text="${item.user.login}"></td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 </body>
