@@ -39,16 +39,12 @@ public class UserDbStore implements UserStore {
     }
 
     /**
-     * Удалить пользователя в базе по id.
-     * @param id id пользователя.
+     * Удалить пользователя в базе.
+     * @param user пользователь.
      */
-
     @Override
-    public void deleteById(int id) {
-        crudRepository.run(
-                "delete from User where id = :fId",
-                Map.of("fId", id)
-        );
+    public void delete(User user) {
+        crudRepository.run(session -> session.delete(user));
     }
 
     /**
@@ -63,6 +59,20 @@ public class UserDbStore implements UserStore {
                 "from User where login = :fLogin AND password = :fPwd",
                 User.class,
                 Map.of("fLogin", login, "fPwd", password)
+        );
+    }
+
+    /**
+     * Найти пользователя в базе по id.
+     * @param id пользователя.
+     * @return Optional<User>
+     */
+    @Override
+    public Optional<User> findUserById(int id) {
+        return crudRepository.optional(
+                "from User where id = :fId",
+                User.class,
+                Map.of("fId", id)
         );
     }
 

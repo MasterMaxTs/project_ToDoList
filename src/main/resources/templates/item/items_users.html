@@ -62,6 +62,7 @@
                 <th scope="col">Название</th>
                 <th scope="col">Дата создания</th>
                 <th scope="col">Состояние</th>
+                <th scope="col">User id</th>
                 <th scope="col">User name</th>
                 <th scope="col">User login</th>
             </tr>
@@ -73,8 +74,14 @@
                 <td th:text="${item.created}"></td>
                 <td th:if="${item.done} == true">выполнено</td>
                 <td th:if="${item.done} != true"> не выполнено</td>
+                <td th:text="${item.user.id}"></td>
                 <td th:text="${item.user.name}"></td>
-                <td th:text="${item.user.login}"></td>
+                <td>
+                    <span th:text="${item.user.login}"></span>
+                    <a th:href="@{|/users/${item.user.id}/delete|}">
+                        <i class="fa fa-trash" title="удалить"></i>
+                    </a>
+                </td>
             </tr>
             </tbody>
         </table>

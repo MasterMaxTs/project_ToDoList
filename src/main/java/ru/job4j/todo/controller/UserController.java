@@ -58,7 +58,7 @@ public class UserController implements ManageSession {
     }
 
     @PostMapping("/updateUser")
-    public String update(@ModelAttribute User user,
+    public String updateUser(@ModelAttribute User user,
                          Model model,
                          RedirectAttributes ra,
                          HttpServletRequest req) {
@@ -79,6 +79,13 @@ public class UserController implements ManageSession {
         session.setAttribute("current", user);
 
         return "redirect:/index";
+    }
+
+    @GetMapping("/users/{id}/delete")
+    public String deleteUser(@PathVariable("id") int id) {
+        Optional<User> userInDb = userService.findUserById(id);
+        userInDb.ifPresent(userService::delete);
+        return "redirect:/itemsOfUsers";
     }
 
     @GetMapping("/loginPage")

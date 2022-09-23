@@ -12,7 +12,9 @@ public interface UserStore {
 
     Optional<User> findUserByLoginAndPwd(String login, String password);
 
+    Optional<User> findUserById(int id);
+
     boolean findUserByLogin(String login);
 
-    void deleteById(int id);
+    void delete(User user);
 }
