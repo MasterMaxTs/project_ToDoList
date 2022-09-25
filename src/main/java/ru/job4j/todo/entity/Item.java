@@ -37,6 +37,11 @@ public class Item {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH,
+            CascadeType.DETACH, CascadeType.MERGE})
+    @JoinColumn(name = "priority_id")
+    private Priority priority;
+
     public Item(String name, String description, boolean done) {
         this.name = name;
         this.description = description;

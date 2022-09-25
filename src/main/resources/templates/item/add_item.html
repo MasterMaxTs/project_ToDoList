@@ -62,6 +62,11 @@
                 <label for="desc">Описание</label><br>
                 <textarea name="description" id="desc" style="height: 250px; width: 600px"
                           placeholder="Введите описание" required="required"></textarea><br><br>
+                <label for="priority">Приоритет</label><br>
+                <select name="priority.position">
+                    <option th:each="priority: ${priorities}" th:value="${priority.position}" th:text="${priority.name}"
+                            id="priority"></option>
+                </select><br><br>
                 <button type="submit" class="btn btn-info" style="float: left">Создать</button>
             </div>
         </form>

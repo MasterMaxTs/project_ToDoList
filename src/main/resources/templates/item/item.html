@@ -53,6 +53,11 @@
         </div>
     </nav><br><br>
     <div class="form-group">
+        <h6>Приоритет:
+        <span th:if="${item.priority.position} == 1" style="color: red"> СРОЧНЫЙ</span>
+        <span th:if="${item.priority.position} == 2" style="color: darkgoldenrod"> ОБЫЧНЫЙ</span>
+        <span th:if="${item.priority.position} == 3" style="color: yellowgreen"> НЕ СРОЧНЫЙ</span>
+        </h6>
         <h5 th:if="${item.done}==true" style="color: darkgreen">Сделано: <span th:text="${item.name}"></span></h5><br>
         <h5 th:if="${item.done}!=true" style="color: crimson">Выполнить: <span th:text="${item.name}"></span></h5><br>
         <textarea th:text="${item.description}" cols="60" rows="12" readonly></textarea>
@@ -65,6 +70,7 @@
             </form>
             <form th:action="@{/formGetUpdateItem}" method="GET">
                 <input type="hidden" name="id" th:value="${item.id}">
+                <input type="hidden" name="priority.position" th:value="${item.priority.position}">
                 <button type="submit" class="btn btn-warning" style="float: left">Отредактировать</button>
             </form>
             <form th:action="@{/formGetDeleteItem}" method="GET">

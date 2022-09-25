@@ -5,13 +5,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.todo.entity.Item;
+import ru.job4j.todo.entity.Priority;
 import ru.job4j.todo.entity.User;
 import ru.job4j.todo.service.itemservice.ItemService;
+import ru.job4j.todo.service.itemservice.priorityservice.PriorityService;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 
 @Controller
@@ -19,6 +22,7 @@ import java.util.List;
 public class ItemController implements ManageSession {
 
     private final ItemService itemService;
+    private final PriorityService priorityService;
 
     @ModelAttribute("current")
     public User getUser(HttpSession session) {
@@ -58,23 +62,30 @@ public class ItemController implements ManageSession {
     }
 
     @GetMapping("/formGetDeleteItem")
-    public String getDelete(Model model, @RequestParam("id") int id) {
+    public String delete(Model model, @RequestParam("id") int id) {
         User user = (User) model.getAttribute("current");
         itemService.delete(id, user);
         return "redirect:/index";
     }
 
     @GetMapping("/formGetUpdateItem")
-    public String getUpdate(Model model, @RequestParam("id") int id) {
+    public String formUpdateItem(@RequestParam("id") int id,
+                                 @RequestParam("priority.position") int position,
+                                 Model model) {
         User user = (User) model.getAttribute("current");
         model.addAttribute(
                 "item", itemService.findById(id, user)
         );
+        model.addAttribute("priority",
+                priorityService.findByPosition(position).get()
+        );
+        model.addAttribute("priorities", priorityService.findAll());
         return "item/update_item";
     }
 
     @GetMapping("/items/new")
-    public String formCreateItem() {
+    public String formCreateItem(Model model) {
+        model.addAttribute("priorities", priorityService.findAll());
         return "item/add_item";
     }
 
@@ -99,23 +110,31 @@ public class ItemController implements ManageSession {
     }
 
     @PostMapping("/addItem")
-    public String add(@ModelAttribute Item item, Model model) {
-        User user = (User) model.getAttribute("current");
-        item.setCreated(
-                Timestamp.valueOf(LocalDateTime.now().withNano(0))
-        );
-        item.setUser(user);
+    public String add(@ModelAttribute Item item,
+                      @RequestParam("priority.position") int position,
+                      Model model) {
+        setSomeFieldsToItem(item, position, model);
         itemService.create(item);
         return "redirect:/index";
     }
 
-    @PostMapping("updateItem")
-    public String update(@ModelAttribute Item item, Model model) {
+    private void setSomeFieldsToItem(@ModelAttribute Item item,
+                                     @RequestParam("priority.position") int position,
+                                     Model model) {
         User user = (User) model.getAttribute("current");
+        Optional<Priority> priority = priorityService.findByPosition(position);
+        priority.ifPresent(item::setPriority);
         item.setCreated(
                 Timestamp.valueOf(LocalDateTime.now().withNano(0))
         );
         item.setUser(user);
+    }
+
+    @PostMapping("updateItem")
+    public String update(@ModelAttribute Item item,
+                         @RequestParam("priority.position") int position,
+                         Model model) {
+        setSomeFieldsToItem(item, position, model);
         itemService.update(item);
         return "redirect:/index";
     }

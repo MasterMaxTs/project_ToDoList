@@ -60,6 +60,11 @@
                 <input type="text" size="50" id="name" th:field="*{name}"/><br><br>
                 <label for="desc">Описание</label><br>
                 <textarea id="desc" cols="60" rows="12" th:field="*{description}"></textarea><br><br>
+                <label for="priority">Приоритет (текущий: <b><span th:text="${priority.name}"></span></b>)</label><br>
+                <select name="priority.position">
+                    <option th:each="priority: ${priorities}" th:value="${priority.position}" th:text="${priority.name}"
+                            id="priority"></option>
+                </select><br><br>
                 <button type="submit" class="btn btn-warning">Редактировать</button>
             </div>
         </form>

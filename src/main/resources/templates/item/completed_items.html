@@ -61,6 +61,7 @@
                 <th scope="col">Название</th>
                 <th scope="col">Дата создания</th>
                 <th scope="col">Состояние</th>
+                <th scope="col">Приоритет</th>
             </tr>
             </thead>
             <tbody>
@@ -75,8 +76,8 @@
                     </a><span th:text="${item.name}"></span>
                 </td>
                 <td th:text="${item.created}"></td>
-                <td th:if="${item.done} == true">выполнено</td>
-                <td th:if="${item.done} != true"> не выполнено</td>
+                <td th:if="${item.done} == true" style="color: darkgreen">выполнено</td>
+                <td th:text="${item.priority.name}"></td>
             </tr>
             </tbody>
         </table>

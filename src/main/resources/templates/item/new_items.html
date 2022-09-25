@@ -61,19 +61,23 @@
                 <th scope="col">Название</th>
                 <th scope="col">Дата создания</th>
                 <th scope="col">Состояние</th>
+                <th scope="col">Приоритет</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="item: ${newItems}">
-                <td th:text="${item.id}"></td>
+                <td>
+                    <span th:text="${item.id}"></span>
+                    <i th:if="${item.priority.name} =='срочный'" class="fa fa-clock-o" aria-hidden="true" title="срочно"></i>
+                </td>
                 <td>
                     <a th:href="@{|/items/${item.id}/edit|}">
                         <i class="fa fa-eye" title="открыть описание" aria-hidden="true"></i>
                     </a> <span th:text="${item.name}"></span>
                 </td>
                 <td th:text="${item.created}"></td>
-                <td th:if="${item.done} == true">выполнено</td>
-                <td th:if="${item.done} != true"> не выполнено</td>
+                <td th:if="${item.done} != true" style="color: crimson"> не выполнено</td>
+                <td th:text="${item.priority.name}"></td>
             </tr>
             </tbody>
         </table>
