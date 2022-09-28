@@ -13,5 +13,5 @@ CREATE TABLE IF NOT EXISTS todo_tasks
     description TEXT,
     created     TIMESTAMP,
     done        BOOLEAN,
-    user_id     INT REFERENCES todo_users(id)
+    user_id     INT NOT NULL REFERENCES todo_users(id)
 );

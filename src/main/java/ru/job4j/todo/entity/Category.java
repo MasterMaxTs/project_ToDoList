@@ -3,15 +3,16 @@ package ru.job4j.todo.entity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "todo_priorities")
+@Table(name = "todo_categories")
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Priority {
+public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,10 +21,8 @@ public class Priority {
     private int id;
 
     @Column(name = "name")
+    @ToString.Include
     private String name;
-
-    @Column(name = "position")
-    private int position;
 
     public String toString() {
         return name;

@@ -60,12 +60,17 @@
                 <input type="text" name="name" id="name" size="40"
                        placeholder="Введите название" required="required"/><br><br>
                 <label for="desc">Описание</label><br>
-                <textarea name="description" id="desc" style="height: 250px; width: 600px"
+                <textarea name="description" id="desc" style="height: 150px; width: 500px"
                           placeholder="Введите описание" required="required"></textarea><br><br>
                 <label for="priority">Приоритет</label><br>
-                <select name="priority.position">
+                <select name="priority.position" title="Выберете:">
                     <option th:each="priority: ${priorities}" th:value="${priority.position}" th:text="${priority.name}"
                             id="priority"></option>
+                </select><br><br>
+                <label for="category">Категория</label><br>
+                <select name="categories" title="Выбрать несколько: ctrl + лкм" multiple size="5" required>
+                    <option th:each="category: ${categories}" th:value="${category.id}" th:text="${category.name}"
+                            id="category"></option>
                 </select><br><br>
                 <button type="submit" class="btn btn-info" style="float: left">Создать</button>
             </div>

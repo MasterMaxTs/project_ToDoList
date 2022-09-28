@@ -53,17 +53,22 @@
         </div>
     </nav>
     <div class="card-body"><b>Редактировать задание:</b> <br><br>
-        <form th:action="@{/updateItem}" method="POST" th:object="${item}">
+        <form th:action="@{/addItem}" method="POST" th:object="${item}">
             <input type="hidden" name="id" th:value="${item.id}"/>
             <div class="form-group">
                 <label for="name">Название</label><br>
                 <input type="text" size="50" id="name" th:field="*{name}"/><br><br>
                 <label for="desc">Описание</label><br>
                 <textarea id="desc" cols="60" rows="12" th:field="*{description}"></textarea><br><br>
-                <label for="priority">Приоритет (текущий: <b><span th:text="${priority.name}"></span></b>)</label><br>
-                <select name="priority.position">
-                    <option th:each="priority: ${priorities}" th:value="${priority.position}" th:text="${priority.name}"
-                            id="priority"></option>
+                <label for="priority">Приоритет</label><br>
+                <select name="priority.position" id="priority" required>
+                    <option th:text="${#strings.concat('Текущий: ', priority.name)}" disabled></option>
+                    <option th:each="priority: ${priorities}" th:value="${priority.position}" th:text="${priority.name}"></option>
+                </select><br><br>
+                <label for="categories">Категории</label><br>
+                <select name="categories" id="categories" title="Выбрать несколько: ctrl + лкм" size="6" multiple required>
+                    <option th:text="${#strings.concat('Текущая(ие): ', #strings.listJoin(itemCategories, ' , '))}" disabled></option>
+                    <option th:each="category: ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
                 </select><br><br>
                 <button type="submit" class="btn btn-warning">Редактировать</button>
             </div>

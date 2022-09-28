@@ -8,11 +8,13 @@ import ru.job4j.todo.entity.Item;
 import ru.job4j.todo.entity.Priority;
 import ru.job4j.todo.entity.User;
 import ru.job4j.todo.service.itemservice.ItemService;
+import ru.job4j.todo.service.itemservice.categoryservice.CategoryService;
 import ru.job4j.todo.service.itemservice.priorityservice.PriorityService;
 
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +25,7 @@ public class ItemController implements ManageSession {
 
     private final ItemService itemService;
     private final PriorityService priorityService;
+    private final CategoryService categoryService;
 
     @ModelAttribute("current")
     public User getUser(HttpSession session) {
@@ -73,19 +76,21 @@ public class ItemController implements ManageSession {
                                  @RequestParam("priority.position") int position,
                                  Model model) {
         User user = (User) model.getAttribute("current");
-        model.addAttribute(
-                "item", itemService.findById(id, user)
-        );
+        Item item = itemService.findById(id, user);
+        model.addAttribute("item", item);
         model.addAttribute("priority",
                 priorityService.findByPosition(position).get()
         );
         model.addAttribute("priorities", priorityService.findAll());
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("itemCategories", item.getCategories());
         return "item/update_item";
     }
 
     @GetMapping("/items/new")
     public String formCreateItem(Model model) {
         model.addAttribute("priorities", priorityService.findAll());
+        model.addAttribute("categories", categoryService.findAll());
         return "item/add_item";
     }
 
@@ -112,30 +117,11 @@ public class ItemController implements ManageSession {
     @PostMapping("/addItem")
     public String add(@ModelAttribute Item item,
                       @RequestParam("priority.position") int position,
+                      @RequestParam("categories") Integer[] categories,
                       Model model) {
-        setSomeFieldsToItem(item, position, model);
-        itemService.create(item);
-        return "redirect:/index";
-    }
-
-    private void setSomeFieldsToItem(@ModelAttribute Item item,
-                                     @RequestParam("priority.position") int position,
-                                     Model model) {
         User user = (User) model.getAttribute("current");
-        Optional<Priority> priority = priorityService.findByPosition(position);
-        priority.ifPresent(item::setPriority);
-        item.setCreated(
-                Timestamp.valueOf(LocalDateTime.now().withNano(0))
-        );
-        item.setUser(user);
-    }
-
-    @PostMapping("updateItem")
-    public String update(@ModelAttribute Item item,
-                         @RequestParam("priority.position") int position,
-                         Model model) {
-        setSomeFieldsToItem(item, position, model);
-        itemService.update(item);
+        setSomeTaskFields(item, position, categories, user);
+        itemService.create(item);
         return "redirect:/index";
     }
 
@@ -150,5 +136,25 @@ public class ItemController implements ManageSession {
     public String getItemsByUsers(Model model) {
         model.addAttribute("items", itemService.findAll());
         return "/item/items_users";
+    }
+
+    private void setSomeTaskFields(Item item, int position, Integer[] categories, User user) {
+        Optional<Priority> priority = priorityService.findByPosition(position);
+        priority.ifPresent(item::setPriority);
+        item.setCreated(
+                Timestamp.valueOf(LocalDateTime.now().withNano(0))
+        );
+        item.setUser(user);
+        addCategoriesToTask(item, categories);
+    }
+
+    private void addCategoriesToTask(Item item, Integer[] categories) {
+        Arrays.stream(categories)
+                .map(id -> categoryService.findById(id)
+                        .orElseThrow(
+                                () -> new NullPointerException("Категория с заданным id не найдена")
+                        )
+                )
+                .forEach(item::addCategoryToTask);
     }
 }

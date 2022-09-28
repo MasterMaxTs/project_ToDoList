@@ -62,13 +62,14 @@
                     <th scope="col">Дата создания</th>
                     <th scope="col">Состояние</th>
                     <th scope="col">Приоритет</th>
+                    <th scope="col">Категория</th>
                 </tr>
             </thead>
             <tbody>
                 <tr th:each="item: ${items}">
                     <td>
                         <span th:text="${item.id}"></span>
-                        <i th:if="${item.priority.name} =='срочный'" class="fa fa-clock-o" aria-hidden="true" title="срочно"></i>
+                        <i th:if="${item.priority.name =='срочный'} and ${!item.done}" class="fa fa-clock-o" aria-hidden="true" title="срочно"></i>
                     </td>
                     <td>
                         <a th:href="@{|/items/${item.id}/edit|}">
@@ -79,9 +80,10 @@
                         </a><span th:text="${item.name}"></span>
                     </td>
                     <td th:text="${item.created}"></td>
-                    <td th:if="${item.done} == true" style="color: darkgreen">выполнено</td>
-                    <td th:if="${item.done} != true" style="color: crimson" > не выполнено</td>
-                    <td th:text="${item.priority.name}"></td>
+                    <td th:if="${item.done}" style="color: darkgreen">выполнено</td>
+                    <td th:if="${!item.done}" style="color: crimson" > не выполнено</td>
+                    <td th:text="${item.priority}"></td>
+                    <td th:text="${#strings.listJoin(item.categories, ' , ')}"></td>
                 </tr>
             </tbody>
         </table>

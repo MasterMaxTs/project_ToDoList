@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS todo_priorities
 (
     id SERIAL PRIMARY KEY,
-    name VARCHAR(20),
-    position INT
+    name VARCHAR(20) NOT NULL,
+    position INT NOT NULL
 );
 
 INSERT INTO todo_priorities (name, position) VALUES ('срочный', 1);

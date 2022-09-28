@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "todo_tasks")
@@ -42,9 +44,23 @@ public class Item {
     @JoinColumn(name = "priority_id")
     private Priority priority;
 
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH,
+            CascadeType.DETACH, CascadeType.MERGE},
+            fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "todo_tasks_categories",
+            joinColumns = {@JoinColumn(name = "task_id")},
+            inverseJoinColumns = {@JoinColumn(name = "category_id")}
+    )
+    private final Set<Category> categories = new HashSet<>();
+
     public Item(String name, String description, boolean done) {
         this.name = name;
         this.description = description;
         this.done = done;
+    }
+
+    public void addCategoryToTask(Category category) {
+        categories.add(category);
     }
 }

@@ -19,5 +19,6 @@
         <mapping class="ru.job4j.todo.entity.Item"/>
         <mapping class="ru.job4j.todo.entity.User"/>
         <mapping class="ru.job4j.todo.entity.Priority"/>
+        <mapping class="ru.job4j.todo.entity.Category"/>
     </session-factory>
 </hibernate-configuration>

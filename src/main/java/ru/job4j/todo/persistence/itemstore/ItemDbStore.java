@@ -16,41 +16,48 @@ public class ItemDbStore implements ItemStore {
     private final CrudRepository crudRepository;
 
     /**
-     * Сохранить задачу в базе.
+     * Сохранить или обновить задачу в базе.
      * @param item пользователь.
      * @return задача с id.
      */
     @Override
     public Item create(Item item) {
-        crudRepository.run(session -> session.save(item));
+        crudRepository.run(session -> session.saveOrUpdate(item));
         return item;
     }
 
     /**
-     * Список задач, отсортированных по дате создания от ранних к поздним.
+     * Список задач, отсортированных по приоритету и дате создания
+     * от ранних к поздним.
      * @return список задач.
      */
     @Override
     public List<Item> findAll() {
-        return crudRepository.query("from Item order by created desc", Item.class);
+        return crudRepository.query(
+                "from Item order by priority asc, created desc",
+                Item.class
+        );
     }
 
     /**
-     * Список задач, отсортированных по дате создания от ранних к поздним.
+     * Список задач, отсортированных по приоритету и дате создания
+     * от ранних к поздним.
      * @param user текущий пользователь.
      * @return список задач.
      */
     @Override
     public List<Item> findAll(User user) {
         return crudRepository.query(
-                "from Item where user = :fUser order by created desc",
+                "from Item where user = :fUser order by "
+                        + "priority asc, created desc",
                 Item.class,
                 Map.of("fUser", user)
         );
     }
 
     /**
-     * Список завершенных задач, отсортированных по дате создания от ранних к поздним.
+     * Список завершенных задач, отсортированных по приоритету и дате создания
+     * от ранних к поздним.
      * @param user текущий пользователь.
      * @return список завершенных задач.
      */
@@ -58,14 +65,15 @@ public class ItemDbStore implements ItemStore {
     public List<Item> findCompleted(User user) {
         return crudRepository.query(
                 "from Item where user = :fUser AND done = :isDone"
-                        + " order by created desc",
+                        + " order by priority asc, created desc",
                 Item.class,
                 Map.of("fUser", user, "isDone", true)
         );
     }
 
     /**
-     * Список новых задач, отсортированных по дате создания от ранних к поздним.
+     * Список новых задач, отсортированных по приоритету и дате создания
+     * от ранних к поздним.
      * @param user текущий пользователь.
      * @return список новых задач.
      */
@@ -73,7 +81,7 @@ public class ItemDbStore implements ItemStore {
     public List<Item> findNew(User user) {
         return crudRepository.query(
                 "from Item where user = :fUser AND done = :isDone"
-                + " order by created desc",
+                + " order by priority asc, created desc",
                 Item.class,
                 Map.of("fUser", user, "isDone", false)
         );
