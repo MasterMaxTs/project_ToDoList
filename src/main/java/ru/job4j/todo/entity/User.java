@@ -32,6 +32,11 @@ public class User {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<Item> items;
 
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH,
+            CascadeType.DETACH, CascadeType.MERGE})
+    @JoinColumn(name = "time_zone_id")
+    private TimeZone timeZone;
+
     public User(String name, String login, String password) {
         this.name = name;
         this.login = login;

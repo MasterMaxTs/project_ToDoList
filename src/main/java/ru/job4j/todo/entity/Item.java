@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,7 +29,8 @@ public class Item {
     private String description;
 
     @Column(name = "created")
-    private Timestamp created;
+    @Temporal(value = TemporalType.TIMESTAMP)
+    private Calendar created;
 
     @Column(name = "done")
     private boolean done;

@@ -5,7 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import ru.job4j.todo.entity.TimeZone;
 import ru.job4j.todo.entity.User;
+import ru.job4j.todo.service.timezoneservice.TimeZoneService;
 import ru.job4j.todo.service.userservice.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +19,7 @@ import java.util.Optional;
 public class UserController implements ManageSession {
 
     private final UserService userService;
+    private final TimeZoneService timeZoneService;
 
     @ModelAttribute("current")
     public User getUser(HttpSession session) {
@@ -28,6 +31,7 @@ public class UserController implements ManageSession {
                               @RequestParam(value = "msg", required = false) String message,
                               Model model) {
         model.addAttribute("msg", message);
+        model.addAttribute("timezones", timeZoneService.findAll());
         return "user/add_user";
     }
 
@@ -36,6 +40,9 @@ public class UserController implements ManageSession {
                           HttpServletRequest req,
                           Model model) {
         if (!userService.findUserByLogin(user.getLogin())) {
+            Optional<TimeZone> timeZoneInDb = timeZoneService.findById(
+                    Integer.parseInt(req.getParameter("tz.id")));
+            timeZoneInDb.ifPresent(user::setTimeZone);
             userService.add(user);
             HttpSession session = req.getSession();
             session.setAttribute("current", user);
@@ -54,6 +61,7 @@ public class UserController implements ManageSession {
     public String formGetUpdate(@RequestParam(value = "msg", required = false) String message,
                                 Model model) {
         model.addAttribute("msg", message);
+        model.addAttribute("timezones", timeZoneService.findAll());
         return "user/update_user";
     }
 
@@ -74,6 +82,9 @@ public class UserController implements ManageSession {
             ra.addAttribute("msg", message);
             return "redirect:/formUpdateUser";
         }
+        Optional<TimeZone> timeZoneInDb = timeZoneService.findById(
+                Integer.parseInt(req.getParameter("tz.id")));
+        timeZoneInDb.ifPresent(user::setTimeZone);
         userService.update(user);
         HttpSession session = req.getSession();
         session.setAttribute("current", user);

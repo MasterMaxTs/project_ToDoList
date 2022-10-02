@@ -76,7 +76,7 @@
                     <i th:if="${item.priority.name =='срочный'} and ${!item.done}" class="fa fa-clock-o" aria-hidden="true" title="срочно"></i>
                 </td>
                 <td th:text="${item.name}"></td>
-                <td th:text="${item.created}"></td>
+                <td th:text="${#calendars.format(item.created, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 <td th:text="${item.done} ? 'выполнено' : 'не выполнено'"></td>
                 <td th:text="${item.priority}"></td>
                 <td th:text="${#strings.listJoin(item.categories, ' , ')}"></td>

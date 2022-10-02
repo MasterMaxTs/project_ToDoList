@@ -76,7 +76,7 @@
                         <i class="fa fa-eye" title="открыть описание" aria-hidden="true"></i>
                     </a> <span th:text="${item.name}"></span>
                 </td>
-                <td th:text="${item.created}"></td>
+                <td th:text="${#calendars.format(item.created, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 <td th:if="${!item.done}" style="color: crimson"> не выполнено</td>
                 <td th:text="${item.priority}"></td>
                 <td th:text="${#strings.listJoin(item.categories, ' , ')}"></td>

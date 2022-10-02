@@ -12,11 +12,9 @@ import ru.job4j.todo.service.itemservice.categoryservice.CategoryService;
 import ru.job4j.todo.service.itemservice.priorityservice.PriorityService;
 
 import javax.servlet.http.HttpSession;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.time.ZoneId;
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -38,12 +36,12 @@ public class ItemController implements ManageSession {
     }
 
     @GetMapping("/items")
-    public String getItems(Model model) {
+    public String all(Model model) {
         User user = (User) model.getAttribute("current");
         model.addAttribute(
                 "items",
-                user.getId() == 0 ? List.of() : itemService.findAll(user)
-        );
+                user.getId() == 0 ? List.of()
+                        : itemsForShowToUser(itemService.findAll(user), model));
         return "item/index";
     }
 
@@ -95,21 +93,23 @@ public class ItemController implements ManageSession {
     }
 
     @GetMapping("/completed_items")
-    public String getCompletedItems(Model model) {
+    public String allCompleted(Model model) {
         User user = (User) model.getAttribute("current");
         model.addAttribute(
                 "completed",
-                user.getId() == 0 ? List.of() : itemService.findCompleted(user)
+                user.getId() == 0 ? List.of()
+                        : itemsForShowToUser(itemService.findCompleted(user), model)
         );
         return "item/completed_items";
     }
 
     @GetMapping("/new_items")
-    public String getNewItems(Model model) {
+    public String allNews(Model model) {
         User user = (User) model.getAttribute("current");
         model.addAttribute(
                 "newItems",
-                user.getId() == 0 ? List.of() : itemService.findNew(user)
+                user.getId() == 0 ? List.of()
+                        : itemsForShowToUser(itemService.findNew(user), model)
         );
         return "item/new_items";
     }
@@ -133,7 +133,7 @@ public class ItemController implements ManageSession {
     }
 
     @GetMapping("/itemsOfUsers")
-    public String getItemsByUsers(Model model) {
+    public String allByUsers(Model model) {
         model.addAttribute("items", itemService.findAll());
         return "/item/items_users";
     }
@@ -141,9 +141,7 @@ public class ItemController implements ManageSession {
     private void setSomeTaskFields(Item item, int position, Integer[] categories, User user) {
         Optional<Priority> priority = priorityService.findByPosition(position);
         priority.ifPresent(item::setPriority);
-        item.setCreated(
-                Timestamp.valueOf(LocalDateTime.now().withNano(0))
-        );
+        item.setCreated(Calendar.getInstance());
         item.setUser(user);
         addCategoriesToTask(item, categories);
     }
@@ -156,5 +154,15 @@ public class ItemController implements ManageSession {
                         )
                 )
                 .forEach(item::addCategoryToTask);
+    }
+
+    private List<Item> itemsForShowToUser(List<Item> items, Model model) {
+        User user = (User) model.getAttribute("current");
+        return items.stream()
+                .peek(i -> i.getCreated().setTimeZone(
+                                TimeZone.getTimeZone(ZoneId.of(user.getTimeZone().getTimeZoneDbName()))
+                        )
+                )
+                .collect(Collectors.toList());
     }
 }

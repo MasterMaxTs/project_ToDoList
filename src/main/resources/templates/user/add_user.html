@@ -64,6 +64,11 @@
                 <label for="pwd">Password</label><br>
                 <input type="password" id="pwd"
                        placeholder="Придумайте пароль" required th:field="*{password}"/><br><br>
+                <label for="timezone">Ваш часовой пояс</label><br>
+                <select name="tz.id" id="timezone" title="Выбрать часовой пояс" required>
+                    <option th:each="tz :${timezones}" th:value="${tz.id}"
+                            th:text="${#strings.concat(tz.timeZoneDbName,' ',tz.utcOffset)}"></option>
+                </select><br><br>
                 <button type="submit" class="btn btn-info" style="float: left">Зарегистрировать</button>
             </div>
         </form>

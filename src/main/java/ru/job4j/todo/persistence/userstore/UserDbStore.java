@@ -21,7 +21,7 @@ public class UserDbStore implements UserStore {
      */
     @Override
     public User add(User user) {
-        crudRepository.run(session -> session.persist(user));
+        crudRepository.run(session -> session.save(user));
         return user;
     }
 
