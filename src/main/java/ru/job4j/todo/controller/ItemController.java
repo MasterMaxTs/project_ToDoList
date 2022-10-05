@@ -12,7 +12,6 @@ import ru.job4j.todo.service.itemservice.categoryservice.CategoryService;
 import ru.job4j.todo.service.itemservice.priorityservice.PriorityService;
 
 import javax.servlet.http.HttpSession;
-import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -160,7 +159,7 @@ public class ItemController implements ManageSession {
         User user = (User) model.getAttribute("current");
         return items.stream()
                 .peek(i -> i.getCreated().setTimeZone(
-                                TimeZone.getTimeZone(ZoneId.of(user.getTimeZone().getTimeZoneDbName()))
+                                TimeZone.getTimeZone((user.getTimeZone().getTimeZoneDbName()))
                         )
                 )
                 .collect(Collectors.toList());
