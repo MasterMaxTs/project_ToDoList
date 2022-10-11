@@ -57,28 +57,23 @@
         <table class="table table-striped">
             <caption style="caption-side: top; text-align: right">Задачи пользователей</caption>
             <thead>
-            <tr>
+            <tr style="background-color: gainsboro">
                 <th scope="col">#</th>
                 <th scope="col">Название</th>
-                <th scope="col">Дата создания</th>
-                <th scope="col">Состояние</th>
-                <th scope="col">Приоритет</th>
+                <th scope="col">Создана</th>
+                <th scope="col">Выполнение</th>
                 <th scope="col">Категория</th>
-                <th scope="col">User id</th>
-                <th scope="col">User name</th>
-                <th scope="col">User login</th>
+                <th scope="col">User_id</th>
+                <th scope="col">User_name</th>
+                <th scope="col">User_login</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="item: ${items}">
-                <td>
-                    <span th:text="${item.id}"></span>
-                    <i th:if="${item.priority.name =='срочный'} and ${!item.done}" class="fa fa-clock-o" aria-hidden="true" title="срочно"></i>
-                </td>
+                <td th:text="${item.id}"></td>
                 <td th:text="${item.name}"></td>
-                <td th:text="${#calendars.format(item.created, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                <td th:text="${item.done} ? 'выполнено' : 'не выполнено'"></td>
-                <td th:text="${item.priority}"></td>
+                <td th:text="${#calendars.format(item.created, 'HH:mm dd/MM/yy')}"></td>
+                <td th:text="${item.done} ? 'да' : 'нет'"></td>
                 <td th:text="${#strings.listJoin(item.categories, ' , ')}"></td>
                 <td th:text="${item.user.id}"></td>
                 <td th:text="${item.user.name}"></td>

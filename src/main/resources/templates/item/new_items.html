@@ -56,7 +56,7 @@
         <table class="table table-striped">
             <caption style="caption-side: top; text-align: right">Новые задания</caption>
             <thead>
-            <tr>
+            <tr style="background-color: gainsboro">
                 <th scope="col">#</th>
                 <th scope="col">Название</th>
                 <th scope="col">Дата создания</th>
@@ -67,18 +67,17 @@
             </thead>
             <tbody>
             <tr th:each="item: ${newItems}">
-                <td>
-                    <span th:text="${item.id}"></span>
-                    <i th:if="${item.priority.name =='срочный'}" class="fa fa-clock-o" aria-hidden="true" title="срочно"></i>
-                </td>
+                <td th:text="${item.id}"></td>
                 <td>
                     <a th:href="@{|/items/${item.id}/edit|}">
                         <i class="fa fa-eye" title="открыть описание" aria-hidden="true"></i>
                     </a> <span th:text="${item.name}"></span>
                 </td>
-                <td th:text="${#calendars.format(item.created, 'yyyy-MM-dd HH:mm:ss')}"></td>
-                <td th:if="${!item.done}" style="color: crimson"> не выполнено</td>
-                <td th:text="${item.priority}"></td>
+                <td th:text="${#calendars.format(item.created, 'HH:mm dd/MM/yy')}"></td>
+                <td th:if="${!item.done}">не выполнено</td>
+                <td th:if="${item.priority.name =='срочный'}" style="background-color: indianred" th:text="${item.priority}"></td>
+                <td th:if="${item.priority.name =='обычный'}" style="background-color: burlywood" th:text="${item.priority}"></td>
+                <td th:if="${item.priority.name =='не срочный'}" style="background-color: beige" th:text="${item.priority}"></td>
                 <td th:text="${#strings.listJoin(item.categories, ' , ')}"></td>
             </tr>
             </tbody>
