@@ -1,1 +1,0 @@
-ALTER TABLE todo_users ADD COLUMN time_zone_id INT REFERENCES todo_time_zones(id);

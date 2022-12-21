@@ -1,8 +1,4 @@
-CREATE TABLE IF NOT EXISTS todo_categories
-(
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(40) NOT NULL
-);
+--comment: Добавление категорий
 
 INSERT INTO todo_categories (name) VALUES ('Семья');
 INSERT INTO todo_categories (name) VALUES ('Учёба');

@@ -1,1 +1,0 @@
-ALTER TABLE todo_tasks ADD COLUMN priority_id INT REFERENCES todo_priorities(id);

@@ -1,9 +1,5 @@
-CREATE TABLE IF NOT EXISTS todo_time_zones
-(
-    id   SERIAL PRIMARY KEY,
-    name VARCHAR(20) NOT NULL UNIQUE,
-    utc_offset CHAR(3) NOT NULL
-);
+--comment: Добавление часовых поясов РФ
+
 
 INSERT INTO todo_time_zones (name,utc_offset) VALUES ('Europe/Kaliningrad', '+2');
 INSERT INTO todo_time_zones (name,utc_offset) VALUES ('Europe/Moscow', '+3');
