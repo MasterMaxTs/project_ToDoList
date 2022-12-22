@@ -7,10 +7,16 @@ import ru.job4j.todo.repository.user.UserRepository;
 
 import java.util.Optional;
 
+/**
+ * Реализация сервиса пользователей
+ */
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    /**
+     * Делегирование выполнения CRUD-операций хранилищу пользователей
+     */
     private final UserRepository store;
 
     @Override

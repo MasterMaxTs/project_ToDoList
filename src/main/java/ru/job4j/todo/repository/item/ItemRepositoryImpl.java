@@ -10,16 +10,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+/**
+ * Реализация хранилища задач
+ */
 @Repository
 @AllArgsConstructor
 public class ItemRepositoryImpl implements ItemRepository {
 
+    /**
+     * Делегирование выполнения CRUD-операций
+     * @see ru.job4j.todo.repository.crud.CrudRepositoryImpl
+     */
     private final CrudRepository crudRepository;
 
     /**
-     * Сохранить или обновить задачу в базе.
-     * @param item пользователь.
-     * @return задача с id.
+     * Сохраняет или обновляет задачу в базе данных.
+     * @param item задача.
+     * @return задача с пронициализированным id.
      */
     @Override
     public Item create(Item item) {
@@ -28,9 +35,9 @@ public class ItemRepositoryImpl implements ItemRepository {
     }
 
     /**
-     * Список задач, отсортированных по приоритету и дате создания
+     * Список всех задач, отсортированных по приоритету и дате создания
      * от ранних к поздним.
-     * @return список задач.
+     * @return список всех задач пользователей сайта.
      */
     @Override
     public List<Item> findAll() {
@@ -41,10 +48,8 @@ public class ItemRepositoryImpl implements ItemRepository {
     }
 
     /**
-     * Список задач, отсортированных по приоритету и дате создания
+     * @return список задач, отсортированных по приоритету и дате создания
      * от ранних к поздним.
-     * @param user текущий пользователь.
-     * @return список задач.
      */
     @Override
     public List<Item> findAll(User user) {
@@ -57,10 +62,8 @@ public class ItemRepositoryImpl implements ItemRepository {
     }
 
     /**
-     * Список завершенных задач, отсортированных по приоритету и дате создания
-     * от ранних к поздним.
-     * @param user текущий пользователь.
-     * @return список завершенных задач.
+     * @return список завершенных задач, отсортированных по приоритету и дате
+     * создания от ранних к поздним.
      */
     @Override
     public List<Item> findCompleted(User user) {
@@ -73,10 +76,8 @@ public class ItemRepositoryImpl implements ItemRepository {
     }
 
     /**
-     * Список новых задач, отсортированных по приоритету и дате создания
-     * от ранних к поздним.
-     * @param user текущий пользователь.
-     * @return список новых задач.
+     * @return список текущих (незавершенных) задач, отсортированных по
+     * приоритету и дате создания от ранних к поздним.
      */
     @Override
     public List<Item> findNew(User user) {
@@ -88,20 +89,11 @@ public class ItemRepositoryImpl implements ItemRepository {
         );
     }
 
-    /**
-     * Обновить в базе задачу
-     * @param item задача
-     */
     @Override
     public void update(Item item) {
         crudRepository.run(session -> session.merge(item));
     }
 
-    /**
-     * удалить в базе задачу
-     * @param id id задачи,
-     * @param user текущий пользователь
-     */
     @Override
     public void delete(int id, User user) {
         crudRepository.run(
@@ -110,12 +102,6 @@ public class ItemRepositoryImpl implements ItemRepository {
         );
     }
 
-    /**
-     * найти в базе задачу по ID.
-     * @param id id задачи,
-     * @param user текущий пользователь
-     * @return задачу, если она найдена в БД, иначе выбрасывает исключение
-     */
     @Override
     public Item findById(int id, User user) {
         return crudRepository.optional(

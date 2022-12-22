@@ -8,10 +8,16 @@ import ru.job4j.todo.repository.item.priority.PriorityRepository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Реализация сервиса приоритетов задач
+ */
 @Service
 @AllArgsConstructor
 public class PriorityServiceImpl implements PriorityService {
 
+    /**
+     * Делегирование выполнения CRUD-операций хранилищу приоритетов задач
+     */
     private PriorityRepository store;
 
     @Override

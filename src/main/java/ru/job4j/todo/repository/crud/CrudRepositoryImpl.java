@@ -11,10 +11,17 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+/**
+ * Реализация функционала выполнения CRUD-операций
+ */
 @Repository
 @AllArgsConstructor
 public class CrudRepositoryImpl implements CrudRepository {
 
+    /**
+     * Объект SessionFactory
+     * @see ru.job4j.todo.Job4jTodoApplication
+     */
     private final SessionFactory sf;
 
     @Override

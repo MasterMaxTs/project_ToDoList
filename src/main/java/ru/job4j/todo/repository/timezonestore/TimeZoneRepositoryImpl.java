@@ -9,10 +9,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Реализация хранилища часовых поясов
+ */
 @Repository
 @AllArgsConstructor
 public class TimeZoneRepositoryImpl implements TimeZoneRepository {
 
+    /**
+     * Делегирование выполнения CRUD-операций
+     * @see ru.job4j.todo.repository.crud.CrudRepositoryImpl
+     */
     private final CrudRepository crudRepository;
 
     @Override

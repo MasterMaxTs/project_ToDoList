@@ -9,10 +9,16 @@ import ru.job4j.todo.repository.item.ItemRepository;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+/**
+ * Реализация сервиса задач
+ */
 @Service
 @AllArgsConstructor
 public class ItemServiceImpl implements ItemService {
 
+    /**
+     * Делегирование выполнения CRUD-операций хранилищу задач
+     */
     private final ItemRepository store;
 
     @Override

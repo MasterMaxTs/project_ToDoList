@@ -9,10 +9,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Реализация хранилища категорий
+ */
 @Repository
 @AllArgsConstructor
 public class CategoryRepositoryImpl implements CategoryRepository {
 
+    /**
+     * Делегирование выполнения CRUD-операций
+     * @see ru.job4j.todo.repository.crud.CrudRepositoryImpl
+     */
     private final CrudRepository crudRepository;
 
     @Override
