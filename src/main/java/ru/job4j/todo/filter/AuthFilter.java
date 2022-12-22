@@ -8,9 +8,17 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Set;
 
+/**
+ * Фильтр проверки прав доступа пользователя к контенту сайта
+ */
 @Component
 public class AuthFilter implements Filter {
 
+    /**
+     * Совокупность уникальных окончаний строк URI, при которой пользователю,
+     * не прошедшему аутентификацию на сайте, доступно содержимое
+     * запрошенного контента
+     */
     private static final Set<String> STRINGS = Set.of("index",
                                                       "items",
                                                       "formAddUser",
@@ -18,10 +26,23 @@ public class AuthFilter implements Filter {
                                                       "loginPage",
                                                       "login");
 
-    private boolean isEnds(String url) {
-        return STRINGS.stream().anyMatch(url::endsWith);
+    /**
+     * Проверка соответствия запрошенного URI доступности
+     * содержимого контента сайта для пользователя,
+     * не прошедшего аутентификацию
+     * @param uri URI
+     * @return результат проверки
+     */
+    private boolean isEnds(String uri) {
+        return STRINGS.stream().anyMatch(uri::endsWith);
     }
 
+    /**
+     * Реализация метода фильтрации
+     * @param request объект запроса в виде HttpServletRequest
+     * @param response объект ответа в виде HttpServletResponse
+     * @param chain объект FilterChain
+     */
     @Override
     public void doFilter(
             ServletRequest request,
@@ -29,8 +50,8 @@ public class AuthFilter implements Filter {
             FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        String url = req.getRequestURI();
-        if (isEnds(url)) {
+        String uri = req.getRequestURI();
+        if (isEnds(uri)) {
             chain.doFilter(req, res);
             return;
         }
