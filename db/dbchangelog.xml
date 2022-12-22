@@ -12,12 +12,13 @@
     <include file="scripts/001_ddl_create_todo_time_zones_table.sql" relativeToChangelogFile="true"/>
     <include file="scripts/002_dml_insert_todo_time_zones.sql" relativeToChangelogFile="true"/>
     <include file="scripts/003_ddl_create_todo_users_table.sql" relativeToChangelogFile="true"/>
-    <include file="scripts/004_ddl_create_todo_priorities_table.sql" relativeToChangelogFile="true"/>
-    <include file="scripts/005_dml_insert_todo_priorities.sql" relativeToChangelogFile="true"/>
-    <include file="scripts/006_ddl_create_todo_tasks_table.sql" relativeToChangelogFile="true"/>
-    <include file="scripts/007_dml_update_todo_tasks.sql" relativeToChangelogFile="true"/>
-    <include file="scripts/008_ddl_create_todo_categories_table.sql" relativeToChangelogFile="true"/>
-    <include file="scripts/009_dml_insert_todo_categories.sql" relativeToChangelogFile="true"/>
-    <include file="scripts/010_ddl_create_todo_tasks_categories_table.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/004_dml_insert_todo_users.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/005_ddl_create_todo_priorities_table.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/006_dml_insert_todo_priorities.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/007_ddl_create_todo_tasks_table.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/008_dml_update_todo_tasks.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/009_ddl_create_todo_categories_table.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/010_dml_insert_todo_categories.sql" relativeToChangelogFile="true"/>
+    <include file="scripts/011_ddl_create_todo_tasks_categories_table.sql" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
