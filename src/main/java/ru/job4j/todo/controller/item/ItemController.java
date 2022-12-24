@@ -1,34 +1,52 @@
-package ru.job4j.todo.controller;
+package ru.job4j.todo.controller.item;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.job4j.todo.entity.Item;
-import ru.job4j.todo.entity.Priority;
-import ru.job4j.todo.entity.User;
-import ru.job4j.todo.service.itemservice.ItemService;
-import ru.job4j.todo.service.itemservice.categoryservice.CategoryService;
-import ru.job4j.todo.service.itemservice.priorityservice.PriorityService;
+import ru.job4j.todo.controller.SessionController;
+import ru.job4j.todo.model.Item;
+import ru.job4j.todo.model.Priority;
+import ru.job4j.todo.model.User;
+import ru.job4j.todo.service.item.ItemService;
+import ru.job4j.todo.service.item.category.CategoryService;
+import ru.job4j.todo.service.item.priority.PriorityService;
 
 import javax.servlet.http.HttpSession;
 import java.util.*;
 import java.util.stream.Collectors;
 
-
+/**
+ * Контроллер задач
+ */
 @Controller
 @AllArgsConstructor
-public class ItemController implements ManageSession {
+public class ItemController extends SessionController {
 
+    /**
+     * Ссылки на слои сервисов
+     */
     private final ItemService itemService;
     private final PriorityService priorityService;
     private final CategoryService categoryService;
 
+    /**
+     * Добавляет пользователя во все модели,
+     * определённые в контроллере задач
+     * @see ru.job4j.todo.controller.SessionController
+     * @param session HttpSession
+     * @return пользователя из текущей сессии
+     */
     @ModelAttribute("current")
     public User getUser(HttpSession session) {
         return getUserFromSession(session);
     }
 
+    /**
+     * Перенаправляет на страницу со всеми задачами пользователя
+     * @return перенаправление на страницу со всеми задачами
+     * /items
+     */
     @GetMapping("/index")
     public String index() {
         return "redirect:/items";
@@ -39,7 +57,7 @@ public class ItemController implements ManageSession {
         User user = (User) model.getAttribute("current");
         model.addAttribute(
                 "items",
-                user.getId() == 0 ? List.of()
+                Objects.requireNonNull(user).getId() == 0 ? List.of()
                         : itemsForShowToUser(itemService.findAll(user), model));
         return "item/index";
     }
@@ -73,14 +91,18 @@ public class ItemController implements ManageSession {
                                  @RequestParam("priority.position") int position,
                                  Model model) {
         User user = (User) model.getAttribute("current");
-        Item item = itemService.findById(id, user);
-        model.addAttribute("item", item);
-        model.addAttribute("priority",
-                priorityService.findByPosition(position).get()
-        );
-        model.addAttribute("priorities", priorityService.findAll());
-        model.addAttribute("categories", categoryService.findAll());
-        model.addAttribute("itemCategories", item.getCategories());
+        try {
+            Item item = itemService.findById(id, user);
+            Priority priority = priorityService.findByPosition(position);
+            model.addAttribute("item", item);
+            model.addAttribute("priority", priority);
+            model.addAttribute("priorities", priorityService.findAll());
+            model.addAttribute("categories", categoryService.findAll());
+            model.addAttribute("itemCategories", item.getCategories());
+        } catch (NoSuchElementException ex) {
+            model.addAttribute("errorMessage", ex.getMessage());
+            return "error/404";
+        }
         return "item/update_item";
     }
 
@@ -96,7 +118,7 @@ public class ItemController implements ManageSession {
         User user = (User) model.getAttribute("current");
         model.addAttribute(
                 "completed",
-                user.getId() == 0 ? List.of()
+                Objects.requireNonNull(user).getId() == 0 ? List.of()
                         : itemsForShowToUser(itemService.findCompleted(user), model)
         );
         return "item/completed_items";
@@ -107,7 +129,7 @@ public class ItemController implements ManageSession {
         User user = (User) model.getAttribute("current");
         model.addAttribute(
                 "newItems",
-                user.getId() == 0 ? List.of()
+                Objects.requireNonNull(user).getId() == 0 ? List.of()
                         : itemsForShowToUser(itemService.findNew(user), model)
         );
         return "item/new_items";
@@ -119,8 +141,13 @@ public class ItemController implements ManageSession {
                       @RequestParam("categories") Integer[] categories,
                       Model model) {
         User user = (User) model.getAttribute("current");
-        setSomeTaskFields(item, position, categories, user);
-        itemService.create(item);
+        try {
+            setSomeTaskFields(item, position, categories, user);
+            itemService.create(item);
+        } catch (NoSuchElementException ex) {
+            model.addAttribute("errorMessage", ex);
+            return "error/404";
+        }
         return "redirect:/index";
     }
 
@@ -137,9 +164,12 @@ public class ItemController implements ManageSession {
         return "/item/items_users";
     }
 
-    private void setSomeTaskFields(Item item, int position, Integer[] categories, User user) {
-        Optional<Priority> priority = priorityService.findByPosition(position);
-        priority.ifPresent(item::setPriority);
+    private void setSomeTaskFields(Item item, int position,
+                                   Integer[] categories, User user) {
+        Priority priority = priorityService.findByPosition(position);
+        if (priority != null) {
+            item.setPriority(priority);
+        }
         item.setCreated(Calendar.getInstance());
         item.setUser(user);
         addCategoriesToTask(item, categories);
@@ -147,11 +177,7 @@ public class ItemController implements ManageSession {
 
     private void addCategoriesToTask(Item item, Integer[] categories) {
         Arrays.stream(categories)
-                .map(id -> categoryService.findById(id)
-                        .orElseThrow(
-                                () -> new NullPointerException("Категория с заданным id не найдена")
-                        )
-                )
+                .map(categoryService::findById)
                 .forEach(item::addCategoryToTask);
     }
 
@@ -159,9 +185,11 @@ public class ItemController implements ManageSession {
         User user = (User) model.getAttribute("current");
         return items.stream()
                 .peek(i -> i.getCreated().setTimeZone(
-                                TimeZone.getTimeZone((user.getTimeZone().getTimeZoneDbName()))
-                        )
-                )
-                .collect(Collectors.toList());
+                                TimeZone.getTimeZone(
+                                        Objects.requireNonNull(user)
+                                                .getTimeZone()
+                                                .getTimeZoneDbName()
+                                ))
+                ).collect(Collectors.toList());
     }
 }
