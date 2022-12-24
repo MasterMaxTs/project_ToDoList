@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<head lang="en">
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -18,7 +17,7 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Описание</title>
+    <title>Все задания</title>
 </head>
 <body>
 <div class="container">
@@ -33,7 +32,7 @@
                 <a class="nav-item nav-link" th:href="@{/items}">Все</a>
                 <a class="nav-item nav-link" th:href="@{/completed_items}">Выполненные</a>
                 <a class="nav-item nav-link" th:href="@{/new_items}">Новые</a>
-                <a class="nav-item nav-link" th:href="@{/formAddUser}">Регистрация</a>
+                <a class="nav-item nav-link" th:href="@{/formAddUser}"><b>Регистрация</b></a>
                 <a class="nav-item nav-link" th:if="${current.name == 'Гость'}">
                     <form th:action="@{/loginPage}" method="GET">
                         <button type="submit" class="btn btn-info"><span th:text="${current.name}"></span> | Войти</button>
@@ -51,36 +50,12 @@
                 </a>
             </div>
         </div>
-    </nav><br><br>
-    <div class="form-group">
-        <h6>Приоритет:
-        <span th:if="${item.priority.position} == 1" style="color: red"> СРОЧНЫЙ</span>
-        <span th:if="${item.priority.position} == 2" style="color: darkgoldenrod"> ОБЫЧНЫЙ</span>
-        <span th:if="${item.priority.position} == 3" style="color: yellowgreen"> НЕ СРОЧНЫЙ</span>
-        </h6>
-        <h5 th:if="${item.done}" style="color: darkgreen">Сделано: <span th:text="${item.name}"></span></h5><br>
-        <h5 th:unless="${item.done}" style="color: crimson">Выполнить: <span th:text="${item.name}"></span></h5><br>
-        <textarea th:text="${item.description}" cols="60" rows="12" readonly></textarea>
-    </div>
-        <div th:unless="${item.done}">
-            <input type="button" class="btn btn-primary" value="Назад" onclick="window.location.href='/index'"/><br><br>
-            <form th:action="@{/formSetDoneItem}" method="GET">
-                <input type="hidden" name="id" th:value="${item.id}"/>
-                <button type="submit" class="btn btn-success" style="float: left">Выполнено</button>
-            </form>
-            <form th:action="@{/formGetUpdateItem}" method="GET">
-                <input type="hidden" name="id" th:value="${item.id}">
-                <input type="hidden" name="priority.position" th:value="${item.priority.position}">
-                <button type="submit" class="btn btn-warning" style="float: left">Отредактировать</button>
-            </form>
-            <form th:action="@{/formGetDeleteItem}" method="GET">
-                <input type="hidden" name="id" th:value="${item.id}">
-                <button type="submit" class="btn btn-danger" style="float: left">Удалить</button>
-            </form>
-        </div>
-        <div th:if="${item.done}">
-            <input type="button" class="btn btn-primary" value="Назад" onclick="window.location.href='/index'"/>
-        </div>
+    </nav>
+    <div class="card-body">
+        <p> Уважаемый/ая, <span th:text="${name}"></span>,  ваши учётные данные успешно обновлены в приложении!!!</p><br>
+        <form th:action="@{/items/new}" method="GET">
+            <button type="submit" class="btn btn-primary">Добавить задание</button>
+        </form>
     </div>
 </div>
 </body>

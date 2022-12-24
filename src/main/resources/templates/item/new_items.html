@@ -74,7 +74,7 @@
                     </a> <span th:text="${item.name}"></span>
                 </td>
                 <td th:text="${#calendars.format(item.created, 'HH:mm dd/MM/yy')}"></td>
-                <td th:if="${!item.done}" style="background-color: lightcoral">не выполнено</td>
+                <td th:unless="${item.done}" style="background-color: lightcoral">не выполнено</td>
                 <td th:if="${item.priority.name =='срочный'}" style="background-color: indianred" th:text="${item.priority}"></td>
                 <td th:if="${item.priority.name =='обычный'}" style="background-color: burlywood" th:text="${item.priority}"></td>
                 <td th:if="${item.priority.name =='не срочный'}" style="background-color: beige" th:text="${item.priority}"></td>

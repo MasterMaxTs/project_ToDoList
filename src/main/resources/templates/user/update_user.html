@@ -53,13 +53,14 @@
     </nav>
     <div class="card-body">
         <form th:action="@{/updateUser}" method="POST" th:object="${current}">
-            <div class="form-group">
+            <div class="form-group"><b>Редактировать пользователя:</b><br>
+                <span th:if="${msg} != null" th:text="${msg}" style="color: crimson" ></span><br><br>
                 <input type="hidden" name="id" th:value="${current.id}"/>
                 <label for="name">Имя</label><br>
                 <input type="text" id="name" placeholder="Введите имя" required th:field="*{name}"/><br><br>
-                <label for="login">Login</label><br>
-                <input type="text" id="login" placeholder="Придумайте название" required th:field="*{login}"/>
-                <span th:if="${msg} != null" th:text="${msg}" style="color: crimson" ></span><br><br>
+                <label th:with="isAdmin=${current.login == 'admin'}" for="login">Login<span th:if="${isAdmin}">(read only)</span></label><br>
+                <input th:if="${isAdmin}" type="text" readonly th:field="*{login}"/>
+                <input th:unless="${isAdmin}" type="text" id="login" placeholder="Придумайте название" required th:field="*{login}"/><br><br>
                 <label for="pwd">Password</label><br>
                 <input type="password" id="pwd" placeholder="Придумайте пароль" required th:field="*{password}"/><br><br>
                 <label for="timezone">Часовой пояс</label><br>
