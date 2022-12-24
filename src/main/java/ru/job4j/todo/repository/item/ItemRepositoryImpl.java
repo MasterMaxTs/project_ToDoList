@@ -109,7 +109,9 @@ public class ItemRepositoryImpl implements ItemRepository {
                 Map.of("fId", id, "fUser", user)
         ).orElseThrow(
                 () -> new NoSuchElementException(
-                       String.format("задачи с id = %d не найдено в БД", id)
+                       String.format("Задачи с id = %d"
+                               + " для пользователя с login = %s"
+                               + " не найдено в БД! ", id, user.getLogin())
                 ));
     }
 }

@@ -59,7 +59,8 @@ public interface ItemService {
      * Находит задачу по ID, принадлежащую пользователю.
      * @param id id задачи,
      * @param user пользователь
-     * @return задачу, если она найдена, иначе пробрасывает исключение
+     * @return задачу, если она найдена,
+     * иначе пробрасывает исключение
      */
     Item findById(int id, User user) throws NoSuchElementException;
 }

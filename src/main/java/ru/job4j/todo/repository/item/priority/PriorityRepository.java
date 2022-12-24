@@ -3,7 +3,6 @@ package ru.job4j.todo.repository.item.priority;
 import ru.job4j.todo.model.Priority;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Хранилище для приоритетов задач
@@ -19,8 +18,8 @@ public interface PriorityRepository {
     /**
      * Находит приоритет в базе данных по его числовому значению
      * @param position числовое значение приоритета
-     * @return Optional.of(priority), если приоритет найден,
-     * иначе Optional.empty()
+     * @return приоритет, если он найден,
+     * иначе выбрасывает исключение
      */
-    Optional<Priority> findByPosition(int position);
+    Priority findByPosition(int position);
 }

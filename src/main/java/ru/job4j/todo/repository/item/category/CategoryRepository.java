@@ -3,7 +3,6 @@ package ru.job4j.todo.repository.item.category;
 import ru.job4j.todo.model.Category;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Хранилище для категорий задач
@@ -19,8 +18,8 @@ public interface CategoryRepository {
     /**
      * Находит категорию в базе данных по id
      * @param id id категории
-     * @return Optional.of(category), если категория найдена,
-     * иначе Optional.empty()
+     * @return катагорию, если она найдена,
+     * иначе выбрасывает исключение
      */
-    Optional<Category> findById(int id);
+    Category findById(int id);
 }

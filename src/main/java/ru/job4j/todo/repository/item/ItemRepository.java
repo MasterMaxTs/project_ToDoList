@@ -4,7 +4,6 @@ import ru.job4j.todo.model.Item;
 import ru.job4j.todo.model.User;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 /**
  * Хранилище задач пользователя
@@ -64,8 +63,8 @@ public interface ItemRepository {
      * Находит задачу в базе данных по ID, принадлежащую пользователю.
      * @param id id задачи,
      * @param user пользователь
-     * @return задачу, если она найдена в базе данных,
+     * @return задачу, если она найдена,
      * иначе выбрасывает исключение
      */
-    Item findById(int id, User user) throws NoSuchElementException;
+    Item findById(int id, User user);
 }

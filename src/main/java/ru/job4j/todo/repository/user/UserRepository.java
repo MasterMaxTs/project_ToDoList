@@ -2,8 +2,6 @@ package ru.job4j.todo.repository.user;
 
 import ru.job4j.todo.model.User;
 
-import java.util.Optional;
-
 /**
  * Хранилище пользователей
  */
@@ -26,18 +24,18 @@ public interface UserRepository {
      * Находит пользователя в базе данных по login и password.
      * @param login login пользователя.
      * @param password password пользователя.
-     * @return Optional<User>, если пользователь найден в базе данных,
-     * иначе Optional.empty()
+     * @return пользователя, если он найден,
+     * иначе выбрасывает исключение
      */
-    Optional<User> findUserByLoginAndPwd(String login, String password);
+    User findUserByLoginAndPwd(String login, String password);
 
     /**
      * Находит пользователя в базе данных по ID.
      * @param id пользователя.
-     * @return Optional<User>, если пользователь найден в базе данных,
-     * иначе Optional.empty()
+     * @return пользователя, если он найден,
+     * иначе выбрасывает исключение
      */
-    Optional<User> findUserById(int id);
+    User findUserById(int id);
 
     /**
      * Проверяет наличие пользователя в базе данных по login.

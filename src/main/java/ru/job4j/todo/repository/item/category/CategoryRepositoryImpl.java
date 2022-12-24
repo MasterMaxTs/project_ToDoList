@@ -7,7 +7,7 @@ import ru.job4j.todo.repository.crud.CrudRepository;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 /**
  * Реализация хранилища категорий
@@ -28,11 +28,15 @@ public class CategoryRepositoryImpl implements CategoryRepository {
     }
 
     @Override
-    public Optional<Category> findById(int id) {
+    public Category findById(int id) {
         return crudRepository.optional(
                 "from Category where id = :fId",
                 Category.class,
                 Map.of("fId", id)
-        );
+        ).orElseThrow(
+                () -> new NoSuchElementException(
+                        String.format("Категория с id = %d"
+                                        + " не найдена в БД! ", id)
+                ));
     }
 }

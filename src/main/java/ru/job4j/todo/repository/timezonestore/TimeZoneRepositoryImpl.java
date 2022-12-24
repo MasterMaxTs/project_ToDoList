@@ -7,7 +7,7 @@ import ru.job4j.todo.repository.crud.CrudRepository;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 /**
  * Реализация хранилища часовых поясов
@@ -28,11 +28,15 @@ public class TimeZoneRepositoryImpl implements TimeZoneRepository {
     }
 
     @Override
-    public Optional<TimeZone> findById(int tzId) {
+    public TimeZone findById(int tzId) {
         return crudRepository.optional(
                 "from TimeZone where id = :fId",
                 TimeZone.class,
                 Map.of("fId", tzId)
-        );
+        ).orElseThrow(
+                () -> new NoSuchElementException(
+                        String.format("Часовой пояс с id = %d"
+                                + " не найден в БД! ", tzId)
+                ));
     }
 }

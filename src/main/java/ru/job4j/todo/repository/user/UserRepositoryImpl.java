@@ -6,7 +6,7 @@ import ru.job4j.todo.model.User;
 import ru.job4j.todo.repository.crud.CrudRepository;
 
 import java.util.Map;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 /**
  * Реализация хранилища пользователей
@@ -41,21 +41,30 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public Optional<User> findUserByLoginAndPwd(String login, String password) {
+    public User findUserByLoginAndPwd(String login, String password) {
         return crudRepository.optional(
                 "from User where login = :fLogin AND password = :fPwd",
                 User.class,
                 Map.of("fLogin", login, "fPwd", password)
-        );
+        ).orElseThrow(
+                () -> new NoSuchElementException(
+                        String.format("Пользователь с login = %s"
+                                + " и password = %s не найден в БД! ",
+                                login, password)
+                ));
     }
 
     @Override
-    public Optional<User> findUserById(int id) {
+    public User findUserById(int id) {
         return crudRepository.optional(
                 "from User where id = :fId",
                 User.class,
                 Map.of("fId", id)
-        );
+        ).orElseThrow(
+                () -> new NoSuchElementException(
+                        String.format("Пользователь с id = %d"
+                                        + " не найден в БД! ", id)
+                ));
     }
 
     @Override

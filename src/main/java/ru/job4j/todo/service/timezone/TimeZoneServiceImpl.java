@@ -6,7 +6,6 @@ import ru.job4j.todo.model.TimeZone;
 import ru.job4j.todo.repository.timezonestore.TimeZoneRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Реализация сервиса часовых поясов
@@ -26,7 +25,7 @@ public class TimeZoneServiceImpl implements TimeZoneService {
     }
 
     @Override
-    public Optional<TimeZone> findById(int tzId) {
+    public TimeZone findById(int tzId) {
         return store.findById(tzId);
     }
 }

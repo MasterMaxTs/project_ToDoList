@@ -19,8 +19,8 @@ public interface CategoryService {
     /**
      * Находит категорию по id
      * @param id id категории
-     * @return Optional.of(category), если категория найдена,
-     * иначе Optional.empty()
+     * @return категорию, если она найдена,
+     * иначе выбрасывает исключение
      */
-    Optional<Category> findById(int id);
+    Category findById(int id);
 }

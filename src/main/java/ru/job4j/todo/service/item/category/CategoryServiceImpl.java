@@ -6,7 +6,6 @@ import ru.job4j.todo.model.Category;
 import ru.job4j.todo.repository.item.category.CategoryRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Реализация сервиса категорий задач
@@ -26,7 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Optional<Category> findById(int id) {
+    public Category findById(int id) {
         return store.findById(id);
     }
 }

@@ -2,8 +2,6 @@ package ru.job4j.todo.service.user;
 
 import ru.job4j.todo.model.User;
 
-import java.util.Optional;
-
 /**
  * Сервис пользователей
  */
@@ -26,18 +24,18 @@ public interface UserService {
      * Находит пользователя по login и password.
      * @param login login пользователя.
      * @param password password пользователя.
-     * @return Optional<User>, если пользователь найден,
-     * иначе Optional.empty()
+     * @return пользователя, если он найден,
+     * иначе выбрасывает исключение
      */
-    Optional<User> findUserByLoginAndPwd(String login, String password);
+    User findUserByLoginAndPwd(String login, String password);
 
     /**
      * Находит пользователя по ID.
      * @param id id пользователя.
-     * @return Optional<User>, если пользователь найден,
-     * иначе Optional.empty()
+     * @return пользователя, если он найден,
+     * иначе выбрасывает исключение
      */
-    Optional<User> findUserById(int id);
+    User findUserById(int id);
 
     /**
      * Находит пользователя по login.
