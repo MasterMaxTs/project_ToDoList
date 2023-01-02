@@ -3,7 +3,6 @@ package ru.job4j.todo.service.item.category;
 import ru.job4j.todo.model.Category;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
  * Сервис категорий задач
