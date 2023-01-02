@@ -4,7 +4,6 @@ import ru.job4j.todo.model.Item;
 import ru.job4j.todo.model.User;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 /**
  * Сервис задач
@@ -19,7 +18,7 @@ public interface ItemService {
     Item create(Item item);
 
     /**
-     * Возвращает список задач пользователей
+     * Возвращает список задач всех пользователей
      * @return список всех задач пользователей
      */
     List<Item> findAll();
@@ -60,7 +59,7 @@ public interface ItemService {
      * @param id id задачи,
      * @param user пользователь
      * @return задачу, если она найдена,
-     * иначе пробрасывает исключение
+     * иначе выбрасывает исключение
      */
-    Item findById(int id, User user) throws NoSuchElementException;
+    Item findById(int id, User user);
 }
