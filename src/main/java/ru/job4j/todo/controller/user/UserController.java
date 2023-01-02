@@ -40,6 +40,16 @@ public class UserController extends SessionController {
         return getUserFromSession(session);
     }
 
+    /**
+     * Предоставляет новому пользователю форму для регистрации на сайте.
+     * Для отображения данных в форме:
+     * добавляет в модель список часовых поясов РФ, хранимых в БД
+     * добавляет в модель сообщение в случае неуспешной регистрации
+     * @param user пользователь
+     * @param message сообщение пользователю
+     * @param model Model
+     * @return вид user/add_user
+     */
     @GetMapping("/formAddUser")
     public String formAddUser(@ModelAttribute User user,
                               @RequestParam(value = "msg", required = false) String message,
@@ -49,6 +59,19 @@ public class UserController extends SessionController {
         return "user/add_user";
     }
 
+    /**
+     * Добавляет пользователя в БД сайта,
+     * сохраняет в Http сессии пользователя под ключом,
+     * добавляет в модель имя пользователя
+     * @param user пользователь
+     * @param req HttpServletRequest
+     * @param model Model
+     * @return вид user/registration_success, если сохранение пользователя
+     * прошло успешно,
+     * иначе возвращает вид user/add_user, если регистрационные данные,
+     * введённые пользователем, некорректны,
+     * либо возвращает вид error/404 в случае возникновения ошибки
+     */
     @PostMapping("/addUser")
     public String addUser(@ModelAttribute User user,
                           HttpServletRequest req,
@@ -72,6 +95,16 @@ public class UserController extends SessionController {
         }
     }
 
+    /**
+     * Предоставляет пользователю форму для обновления регистрационных данных.
+     * Для отображения данных в форме:
+     * добавляет в модель список часовых поясов РФ, хранимых в БД,
+     * добавляет в модель сообщение, если новые регистрационные данные,
+     * введённые пользователем, некорректны
+     * @param message сообщение пользователю
+     * @param model Model
+     * @return вид user/update_user
+     */
     @GetMapping("/formUpdateUser")
     public String formGetUpdate(@RequestParam(value = "msg", required = false) String message,
                                 Model model) {
@@ -80,6 +113,17 @@ public class UserController extends SessionController {
         return "user/update_user";
     }
 
+    /**
+     * Обновляет регистрационные данные пользователя в БД сайта
+     * @param user пользователь
+     * @param model Model
+     * @param ra RedirectAttributes
+     * @param req HttpServletRequest
+     * @return вид user/update_success, если обновление данных прошло успешно,
+     * иначе перенаправляет на страницу формы для обновления регистрационных
+     * данных с сообщением пользователю о некорректно введённых данных,
+     * либо возвращает вид error/404 в случае ошибки
+     */
     @PostMapping("/updateUser")
     public String updateUser(@ModelAttribute User user,
                          Model model,
@@ -103,6 +147,14 @@ public class UserController extends SessionController {
         }
     }
 
+    /**
+     * Удаляет пользователя из БД сайта по id (опция администратора сайта)
+     * @param id id пользователя
+     * @param model Model
+     * @return перенаправление на страницу со всеми задачами пользователей
+     * /itemsOfUsers, если удаление прошло успешно,
+     * иначе возвращает вид error/404 в случае ошибки
+     */
     @GetMapping("/users/{id}/delete")
     public String deleteUser(@PathVariable("id") int id, Model model) {
         try {
@@ -118,6 +170,14 @@ public class UserController extends SessionController {
         }
     }
 
+    /**
+     * Предоставляет пользователю форму для аутентификации на сайте.
+     * Добавляет в модель сообщение в случае некорретно введённых
+     * регистрационных данных в виде login и password
+     * @param message сообщение пользователю
+     * @param model Model
+     * @return вид user/login_user
+     */
     @GetMapping("/loginPage")
     public String formGetLoginPage(@RequestParam(value = "msg", required = false) String message,
                                    Model model) {
@@ -125,6 +185,16 @@ public class UserController extends SessionController {
         return "user/login_user";
     }
 
+    /**
+     * Выполняет процедуру аутентификации пользователя на сайте,
+     * сохраняет в Http сессии найденного в БД пользователя под ключом
+     * @param req HttpServletRequest
+     * @param ra RedirectAttributes
+     * @return перенаправление на страницу со всеми задачами пользователя
+     * /index, если аутентификация прошла успешно,
+     * иначе перенаправление на страницу с формой для аутентификации на сайте
+     * с сообщением пользователю о некорретно введённых данных
+     */
     @PostMapping("/login")
     public String login(HttpServletRequest req, RedirectAttributes ra) {
         try {
@@ -142,6 +212,12 @@ public class UserController extends SessionController {
         }
     }
 
+    /**
+     * Выполняет процедуру завершения сеанса пользователя
+     * @param session HttpSession
+     * @return перенаправление на форму аутентификации
+     * /loginPage
+     */
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
