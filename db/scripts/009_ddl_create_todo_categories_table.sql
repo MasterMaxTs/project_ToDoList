@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS todo_categories
 (
     id SERIAL PRIMARY KEY,
-    name VARCHAR NOT NULL
+    name VARCHAR NOT NULL UNIQUE
 );
 
 
