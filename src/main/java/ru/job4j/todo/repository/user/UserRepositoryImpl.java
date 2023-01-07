@@ -41,6 +41,11 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    public void deleteAll() {
+        crudRepository.run("delete from User", Map.of());
+    }
+
+    @Override
     public User findUserByLoginAndPwd(String login, String password) {
         return crudRepository.optional(
                 "from User where login = :fLogin AND password = :fPwd",

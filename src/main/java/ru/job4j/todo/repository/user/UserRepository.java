@@ -50,4 +50,9 @@ public interface UserRepository {
      * @param user пользователь.
      */
     void delete(User user);
+
+    /**
+     * Удаляет всех пользователей из базы данных.
+     */
+    void deleteAll();
 }
