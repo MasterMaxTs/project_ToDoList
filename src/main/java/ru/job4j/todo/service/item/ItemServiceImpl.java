@@ -56,7 +56,7 @@ public class ItemServiceImpl implements ItemService {
         store.delete(id, user);
     }
 
-    public Item findById(int id, User user) throws NoSuchElementException {
+    public Item findById(int id, User user) {
         return store.findById(id, user);
     }
 }
