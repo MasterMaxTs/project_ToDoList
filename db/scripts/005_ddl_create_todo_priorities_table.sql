@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS todo_priorities
 (
     id SERIAL PRIMARY KEY,
-    name VARCHAR NOT NULL,
-    position INT NOT NULL
+    name VARCHAR NOT NULL UNIQUE,
+    position INT NOT NULL UNIQUE
 );
 
 
