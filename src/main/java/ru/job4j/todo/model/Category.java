@@ -1,8 +1,6 @@
 package ru.job4j.todo.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,6 +11,7 @@ import javax.persistence.*;
 @Table(name = "todo_categories")
 @Data
 @NoArgsConstructor
+@RequiredArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Category {
 
@@ -29,6 +28,7 @@ public class Category {
      * Название категории
      */
     @Column(name = "name")
+    @NonNull
     private String name;
 
     @Override
