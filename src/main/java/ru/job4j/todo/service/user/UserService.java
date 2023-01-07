@@ -50,4 +50,9 @@ public interface UserService {
      * @param user пользователь.
      */
     void delete(User user);
+
+    /**
+     * Удаляет всех пользователей.
+     */
+    void deleteAll();
 }

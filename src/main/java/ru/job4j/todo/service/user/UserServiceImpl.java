@@ -50,6 +50,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void deleteAll() {
+        store.deleteAll();
+    }
+
+    @Override
     public User findUserByLoginAndPwd(String login, String password) {
         return store.findUserByLoginAndPwd(login, password);
     }
