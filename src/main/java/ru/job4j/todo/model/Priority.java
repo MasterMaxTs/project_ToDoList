@@ -1,8 +1,6 @@
 package ru.job4j.todo.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,6 +11,7 @@ import javax.persistence.*;
 @Table(name = "todo_priorities")
 @Data
 @NoArgsConstructor
+@RequiredArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Priority {
 
@@ -29,12 +28,14 @@ public class Priority {
      * Название приоритета
      */
     @Column(name = "name")
+    @NonNull
     private String name;
 
     /**
      * Числовое обозначение приоритета
      */
     @Column(name = "position")
+    @NonNull
     private int position;
 
     @Override
