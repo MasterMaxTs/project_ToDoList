@@ -1,9 +1,6 @@
 package ru.job4j.todo.model;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -14,6 +11,7 @@ import javax.persistence.*;
 @Table(name = "todo_time_zones")
 @Data
 @NoArgsConstructor
+@RequiredArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString(onlyExplicitlyIncluded = true)
 public class TimeZone {
@@ -32,11 +30,13 @@ public class TimeZone {
     @Column(name = "name")
     @EqualsAndHashCode.Include
     @ToString.Include
+    @NonNull
     private String timeZoneDbName;
 
     /**
      * Временное смещение от UTC
      */
     @Column(name = "utc_offset")
+    @NonNull
     private String utcOffset;
 }
