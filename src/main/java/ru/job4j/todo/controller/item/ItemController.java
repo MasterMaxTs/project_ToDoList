@@ -86,14 +86,20 @@ public class ItemController extends SessionController {
      * @param model Model
      * @param id id задачи
      * @return перенаправление на страницу со всеми задачами пользователя
-     * /index
+     * /index, если задача успешно найдена и обновлена в БД, иначе возращает
+     * вид error/404 с отображением ошибки пользователю
      */
     @GetMapping("/formSetDoneItem")
     public String setDone(Model model, @RequestParam("id") int id) {
         User user = (User) model.getAttribute("current");
-        Item item = itemService.findById(id, user);
-        item.setDone(true);
-        itemService.update(item);
+        try {
+            Item item = itemService.findById(id, user);
+            item.setDone(true);
+            itemService.update(item);
+        } catch (NoSuchElementException ex) {
+            model.addAttribute("errorMessage", ex.getMessage());
+            return "error/404";
+        }
         return "redirect:/index";
     }
 
@@ -255,9 +261,7 @@ public class ItemController extends SessionController {
     private void setSomeTaskFields(Item item, int position,
                                    Integer[] categories, User user) {
         Priority priority = priorityService.findByPosition(position);
-        if (priority != null) {
-            item.setPriority(priority);
-        }
+        item.setPriority(priority);
         item.setCreated(Calendar.getInstance());
         item.setUser(user);
         addCategoriesToTask(item, categories);
