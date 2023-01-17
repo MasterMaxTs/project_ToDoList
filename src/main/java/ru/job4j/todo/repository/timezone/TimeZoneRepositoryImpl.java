@@ -1,4 +1,4 @@
-package ru.job4j.todo.repository.timezonestore;
+package ru.job4j.todo.repository.timezone;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;

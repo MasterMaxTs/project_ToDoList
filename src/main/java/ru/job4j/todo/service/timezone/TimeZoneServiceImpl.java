@@ -3,7 +3,7 @@ package ru.job4j.todo.service.timezone;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.job4j.todo.model.TimeZone;
-import ru.job4j.todo.repository.timezonestore.TimeZoneRepository;
+import ru.job4j.todo.repository.timezone.TimeZoneRepository;
 
 import java.util.List;
 
