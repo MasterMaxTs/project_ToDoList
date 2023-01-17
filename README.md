@@ -1,7 +1,7 @@
 # Job4j_todo
 
 [![Build Status](https://app.travis-ci.com/MasterMaxTs/project_ToDoList.svg?branch=master)](https://app.travis-ci.com/MasterMaxTs/project_ToDoList)
-
+[![codecov](https://codecov.io/gh/MasterMaxTs/project_ToDoList/branch/master/graph/badge.svg?token=BQCYLDCTWL)](https://codecov.io/gh/MasterMaxTs/project_ToDoList)
 ### Это проект по созданию сайта "Список Дел", доступного в браузере.
 
 Чтобы начать использовать функционал сайта, новому пользователю необходимо
