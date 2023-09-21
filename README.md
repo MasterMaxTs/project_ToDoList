@@ -1,11 +1,30 @@
 # Job4j_todo
-
+#### Сервис "Сайт_Список дел"
 [![Build Status](https://app.travis-ci.com/MasterMaxTs/project_ToDoList.svg?branch=master)](https://app.travis-ci.com/MasterMaxTs/project_ToDoList)
 [![codecov](https://codecov.io/gh/MasterMaxTs/project_ToDoList/branch/master/graph/badge.svg?token=BQCYLDCTWL)](https://codecov.io/gh/MasterMaxTs/project_ToDoList)
+
+![](https://img.shields.io/badge/java-11-4AB197)&nbsp;&nbsp;&nbsp;<br>
+![](https://img.shields.io/badge/maven-3.6.3-4AB197)&nbsp;&nbsp;&nbsp;<br>
+![](https://img.shields.io/badge/maven--checkstyle--plugin-3.1.1-4AB197)&nbsp;&nbsp;&nbsp;
+![](https://img.shields.io/badge/maven--javadoc--plugin-3.2.0-4AB197)&nbsp;&nbsp;&nbsp;
+![](https://img.shields.io/badge/liquibase--maven--plugin-4.15.0-4AB197)&nbsp;&nbsp;&nbsp;
+![](https://img.shields.io/badge/jacoco--maven--plugin-0.8.6-4AB197)&nbsp;&nbsp;&nbsp;<br>
+![](https://img.shields.io/badge/spring--boot--starter--web-2.7.13-4AB197)&nbsp;&nbsp;&nbsp;
+![](https://img.shields.io/badge/spring--boot--starter--thymeleaf-2.7.13-4AB197)&nbsp;&nbsp;&nbsp;
+![](https://img.shields.io/badge/hibernate--core-5.6.11-4AB197)&nbsp;&nbsp;&nbsp;
+![](https://img.shields.io/badge/lombok-1.18.22-4AB197)&nbsp;&nbsp;&nbsp;<br>
+![](https://img.shields.io/badge/DBMS:_PostgreSQL-14.0-4AB197)&nbsp;&nbsp;&nbsp;
+![](https://img.shields.io/badge/Style:_bootstrap-4.4.1-4AB197)&nbsp;&nbsp;&nbsp;
+![](https://img.shields.io/badge/Style:_html-5-4AB197)&nbsp;&nbsp;&nbsp;
+![](https://img.shields.io/badge/Style:_css-3-4AB197)&nbsp;&nbsp;&nbsp;<br>
+![](https://img.shields.io/badge/Test:_junit-4.13.2-4AB197)&nbsp;&nbsp;&nbsp;
+![](https://img.shields.io/badge/Test:_hamcrest--all-1.3-4AB197)&nbsp;&nbsp;&nbsp;
+![](https://img.shields.io/badge/Test:_mockito--core-4.9.0-4AB197)&nbsp;&nbsp;&nbsp;
+![](https://img.shields.io/badge/Test:_h2database-2.1.214-4AB197)&nbsp;&nbsp;&nbsp;
 ### Это проект по созданию сайта "Список Дел", доступного в браузере.
 
 Чтобы начать использовать функционал сайта, новому пользователю необходимо
-зарегистрироваться в системе:
+пройти регистрацию:
    > Вкладка навигационного меню: _Регистрация_
    > * Ввод имени;
    > * Ввод login;
@@ -47,20 +66,17 @@
 ### Стек технологий
 
 - Java 11
-- Spring boot v.2.7.3
-- Thymeleaf v.2.7.3
+- Spring-boot-starter-web v.2.7.3
+- Spring-boot-starter-thymeleaf v.2.7.3
 - Bootstrap v.4.4.1
-- Hibernate v.5.6.11
+- Hibernate-core v.5.6.11
 - Lombok v.1.18.22
 - СУБД: PostgreSQL v.14.0
-- Liquibase plugin v.4.15.0
-
-
+<br/><br/>
 - Тестирование:
    - junit v.4.13.2
    - hamcrest v.1.3
    - mockito-core v.4.9.0
-   - Liquibase plugin v.4.15.0
    - БД: h2database v.2.1.214
 
 ---
