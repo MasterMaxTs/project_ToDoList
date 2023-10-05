@@ -1,4 +1,4 @@
-package ru.job4j.todo.service.item.category;
+package ru.job4j.todo.service.category;
 
 import ru.job4j.todo.model.Category;
 

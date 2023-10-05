@@ -1,16 +1,15 @@
-package ru.job4j.todo.controller.item;
+package ru.job4j.todo.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.job4j.todo.controller.SessionController;
 import ru.job4j.todo.model.Item;
 import ru.job4j.todo.model.Priority;
 import ru.job4j.todo.model.User;
+import ru.job4j.todo.service.category.CategoryService;
 import ru.job4j.todo.service.item.ItemService;
-import ru.job4j.todo.service.item.category.CategoryService;
-import ru.job4j.todo.service.item.priority.PriorityService;
+import ru.job4j.todo.service.priority.PriorityService;
 
 import javax.servlet.http.HttpSession;
 import java.util.*;

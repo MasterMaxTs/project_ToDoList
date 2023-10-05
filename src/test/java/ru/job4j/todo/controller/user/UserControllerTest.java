@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import ru.job4j.todo.controller.UserController;
 import ru.job4j.todo.model.TimeZone;
 import ru.job4j.todo.model.User;
 import ru.job4j.todo.service.timezone.TimeZoneService;

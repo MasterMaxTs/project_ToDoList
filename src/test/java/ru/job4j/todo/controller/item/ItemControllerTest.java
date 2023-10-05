@@ -3,10 +3,11 @@ package ru.job4j.todo.controller.item;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.ui.Model;
+import ru.job4j.todo.controller.ItemController;
 import ru.job4j.todo.model.*;
 import ru.job4j.todo.service.item.ItemService;
-import ru.job4j.todo.service.item.category.CategoryService;
-import ru.job4j.todo.service.item.priority.PriorityService;
+import ru.job4j.todo.service.category.CategoryService;
+import ru.job4j.todo.service.priority.PriorityService;
 
 import java.util.Calendar;
 import java.util.List;

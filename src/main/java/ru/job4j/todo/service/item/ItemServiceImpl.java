@@ -7,7 +7,6 @@ import ru.job4j.todo.model.User;
 import ru.job4j.todo.repository.item.ItemRepository;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 /**
  * Реализация сервиса задач

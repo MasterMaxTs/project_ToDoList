@@ -1,4 +1,4 @@
-package ru.job4j.todo.repository.item.category;
+package ru.job4j.todo.repository.category;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;

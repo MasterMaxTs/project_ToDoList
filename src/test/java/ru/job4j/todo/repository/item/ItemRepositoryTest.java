@@ -10,10 +10,10 @@ import ru.job4j.todo.model.Item;
 import ru.job4j.todo.model.User;
 import ru.job4j.todo.repository.crud.CrudRepository;
 import ru.job4j.todo.repository.crud.CrudRepositoryImpl;
-import ru.job4j.todo.repository.item.category.CategoryRepository;
-import ru.job4j.todo.repository.item.category.CategoryRepositoryImpl;
-import ru.job4j.todo.repository.item.priority.PriorityRepository;
-import ru.job4j.todo.repository.item.priority.PriorityRepositoryImpl;
+import ru.job4j.todo.repository.category.CategoryRepository;
+import ru.job4j.todo.repository.category.CategoryRepositoryImpl;
+import ru.job4j.todo.repository.priority.PriorityRepository;
+import ru.job4j.todo.repository.priority.PriorityRepositoryImpl;
 import ru.job4j.todo.repository.user.UserRepository;
 import ru.job4j.todo.repository.user.UserRepositoryImpl;
 

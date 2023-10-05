@@ -1,4 +1,4 @@
-package ru.job4j.todo.repository.item.priority;
+package ru.job4j.todo.repository.priority;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;

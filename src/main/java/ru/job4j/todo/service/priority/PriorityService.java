@@ -1,22 +1,22 @@
-package ru.job4j.todo.repository.item.priority;
+package ru.job4j.todo.service.priority;
 
 import ru.job4j.todo.model.Priority;
 
 import java.util.List;
 
 /**
- * Хранилище для приоритетов задач
+ * Сервис приоритетов задач
  */
-public interface PriorityRepository {
+public interface PriorityService {
 
     /**
-     * Возвращает список всех приоритетов, находящихся в базе данных
+     * Возвращает список приоритетов
      * @return список всех приоритетов
      */
     List<Priority> findAll();
 
     /**
-     * Находит приоритет в базе данных по его числовому значению
+     * Находит приоритет задачи по его числовому значению
      * @param position числовое значение приоритета
      * @return приоритет, если он найден,
      * иначе выбрасывает исключение
