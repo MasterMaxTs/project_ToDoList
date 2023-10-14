@@ -20,7 +20,9 @@
 ![](https://img.shields.io/badge/Test:_junit-4.13.2-4AB197)&nbsp;&nbsp;&nbsp;
 ![](https://img.shields.io/badge/Test:_hamcrest--all-1.3-4AB197)&nbsp;&nbsp;&nbsp;
 ![](https://img.shields.io/badge/Test:_mockito--core-4.9.0-4AB197)&nbsp;&nbsp;&nbsp;
-![](https://img.shields.io/badge/Test:_h2database-2.1.214-4AB197)&nbsp;&nbsp;&nbsp;
+![](https://img.shields.io/badge/Test:_h2database-2.1.214-4AB197)&nbsp;&nbsp;&nbsp;<br><br>
+![](https://img.shields.io/badge/Package:-.war-4AB197)&nbsp;&nbsp;&nbsp;
+
 ### Это проект по созданию сайта "Список Дел", доступного в браузере.
 
 Чтобы начать использовать функционал сайта, новому пользователю необходимо
@@ -66,6 +68,8 @@
 ### Стек технологий
 
 - Java 11
+- Maven 3.6.3
+- Liquibase-maven-plugin v.4.15.0
 - Spring-boot-starter-web v.2.7.3
 - Spring-boot-starter-thymeleaf v.2.7.3
 - Bootstrap v.4.4.1
@@ -87,30 +91,38 @@
 
 ---
 ### Запуск проекта
-1. Создать базу данных с именем todo:
+1. Установить СУБД PostgreSQL
+
+
+2. Создать базу данных с именем todo:
    ```create database todo;```
 
 
-2. Скачать файлы проекта с github в выбранную директорию
+3. Скачать файлы проекта с github по ссылке и разархивировать в выбранную директорию:<br>
+   [https://github.com/MasterMaxTs/project_ToDoList/archive](https://github.com/MasterMaxTs/project_ToDoList/archive/refs/heads/master.zip)
 
 
-3. Открыть командную строку, перейти в директорию проекта и выполнить команду:
-   ```mvn liquibase:update -Pproduction```
+4. Перейти в директорию проекта, открыть командную строку и выполнить команды:
+- Для <ins>первого</ins> запуска приложения выполнить последовательно команды:
+    - ```mvn package -Pproduction -Dmaven.test.skip=true```
+    - ```java -jar target/todo-1.0.war```
+    - внизу окна командной строки скопировать в буфер обмена url:
+      <br>http://localhost:8080/index
 
 
-4. В директории проекта в командной строке выполнить команду:
-   ```mvn exec:java -Dexec.mainClass="ru.job4j.todo.Job4jTodoApplication```
+- Для <ins>последующего</ins> запуска приложения выполнять команду:
+    - ```java -jar target/todo-1.0.war```
+    - внизу окна командной строки скопировать в буфер обмена url:
+      <br>http://localhost:8080/index
 
 
-5. В окне командной строки скопировать в буфер обмена url
 
-   http://localhost:8080/index
-
-
-6. Вставить из буфера обмена url в адресную строку браузера
+5. Вставить из буфера обмена url в адресную строку браузера:<br>
+   [http://localhost:8080/index](http://localhost:8080/index)
 
 
-7. В базу данных пользователей сайта добавлена одна учётная запись пользователя в роли Администратор.
+
+6. В базу данных пользователей сайта добавлена одна учётная запись пользователя в роли Администратор.
 
    > администратору сайта необходимо выполнить вход в систему со следующими учётными данными и сменить пароль
    > * логин: _admin_
@@ -191,5 +203,7 @@
 
 ---
 ### Контакты
-* email: max86ts@gmail.com
-* telegram: matsurkanov
+* Email: java.dev-maxim.tsurkanov@yandex.ru
+* Skype: https://join.skype.com/invite/ODADx0IJ3BBu
+* VK: https://m.vk.com/id349328153
+* Telegram: matsurkanov
